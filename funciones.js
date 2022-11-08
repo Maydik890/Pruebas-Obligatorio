@@ -19,6 +19,7 @@ function inicio(){
     document.querySelector("#btnCrearViaje").addEventListener("click", crearviaje);
     cargarPersonas();
     // mostrar("INICIAL");
+    Ocultar("INICIAL");
     // Ocultar("Secciones");
     // Ocultar("EMPRESA");
     // Ocultar("IMPORTADOR");
