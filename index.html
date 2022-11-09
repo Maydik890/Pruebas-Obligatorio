@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Obligatorio</title>
-    <link rel="stylesheet" href="CSS/estilos.css">
+    <link rel="stylesheet" href="estilos.css">
     <script src="clases.js"></script>
     <script src="MenuOcultar.js"></script>
     <script src="funciones.js"></script>
@@ -47,7 +47,9 @@
     <div id="contenido">
         <!-- PRIMER DIV "INICIAL" -->
         <div id="INICIAL">
+          <div id="Login">
             <h3>Login</h3>
+            
             <form id="formLogin">
                 <label for="user">Ingrese el usuario</label>
                 <input type="text" id="user" required> <br>
@@ -56,6 +58,8 @@
                 <input type="button" value="Login" id="btnLogin">
             
             </form>
+          </div>
+          <div id="Registro">
             <h3>Registro de Importador</h3>
             <form id="formImportador">
                 <label for="userRegistro">Nombre de usuario</label>
@@ -68,6 +72,7 @@
                 <input type="file" id="txtFile" accept="image/*" required> <br>
                 <input type="button" value="Registrar Importador" id="btnRegistrar">
             </form>
+          </div>
             <!--  ------------- DIV EMPRESA---------------  -->
             <div id="EMPRESA">
                 <h2>login con empresa</h2>
@@ -98,17 +103,53 @@
         </select> <br>
         <label for="puerto" id="idPuertoOrigen">Puerto de Origen</label>
         <input type="text" id="txtPuertoOrigen"><br>
-        <label for="Contenedores" id="idCantidadContenedores">Cantidad de contenedores</label>
-        <input type="number" id="txtPuertoOrigen"><br>
+        <label for="Contenedores" id="idCantidadContenedores" >Cantidad de contenedores</label>
+        <input type="number" id="txtCantContenedores"><br>
         <label for="idEmpresa">ID empresa</label>
         <select  id="idSelect2">
         </select> <br>
         <label for="descripcion">Descripcion</label>  <br>
         <textarea id="txtDescripcion" cols="30" rows="10"></textarea> <br>
         <input type="button" value="Crear Viaje" id="btnCrearViaje">
+        <input type="button" value="Mostrar viajes pendientes" id="btnPendientes">
       
     </div>
     <!-- <<<<<<<<<<<<<<<<<<<<<<<<< FIN CREAR VIAJE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+    <br>
+    <!-- <<<<<<<<<<<<<<<<<<< TABLA CANCELAR VIAJE, CONSULTAR.... >>>>>>>>>>>>>>>>>>>>> -->
+    <div id="divTablaPendiente">
+      
+      <div id="divBuscarPendiente">
+      <input type="text" id="txtBuscarPendiente">
+      <input type="button" value="Buscar" id="btnBuscarPendiente">
+      <input type="button" value="Volver" id="VolverCrearViaje">
+    </div>
+      <br>
+
+      <table>
+          <thead>
+              <tr>
+                  <th>ID Empresa</th>
+                  <th>ID Viaje</th>
+                  <th>Tipo de carga</th>
+                  <th>Puerto Origen</th>
+                  <th>Cantidad Contenedores</th>
+                  <th>Descripcion</th>
+                  <th>Cancelar solicitud</th>
+                  
+              </tr>
+          </thead>
+          <tbody id="tablaViajes">
+              <tr>
+                  <td colspan="7">Sin Datos</td>
+              </tr>
+          </tbody>
+      </table>
+
+
+  </div>
+
+  <!-- <<<<<<<<<<<<<<<<<<<<<<<< FIN TABLA>>>>>>>>>>>>>>>>>>>>>>>>> -->
 
 
 
