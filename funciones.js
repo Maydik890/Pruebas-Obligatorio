@@ -269,7 +269,7 @@ function BuscarPendiente(){
         let viaje = viajes[i]
         if(viaje.Desc.includes(descripcion)){
             alert("se encontro")
-        }s
+        }
         else{
             alert("no se encontro")
             
