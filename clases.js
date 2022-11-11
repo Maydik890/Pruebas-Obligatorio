@@ -18,14 +18,15 @@ class Importador {
   }
 }
 
+
 let idViaje = 0;
 class Mercaderia {
-  constructor(TipodeCarga, PuertoOrigen, CantidadContenedores, Descripcion) {
+  constructor(TipodeCarga, PuertoOrigen, CantidadContenedores, Descripcion, Estado) {
     this.id = idViaje++;
     this.Carga = TipodeCarga;
     this.Desc = Descripcion;
     this.PuertoOrigen = PuertoOrigen;
     this.CantCont = CantidadContenedores;
-    this.Estado = "";
+    this.Estado = Estado;
   }
 }

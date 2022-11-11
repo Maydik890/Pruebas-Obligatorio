@@ -31,6 +31,7 @@ function inicio() {
   Ocultar("EMPRESA");
   mostrar("IMPORTADOR");
 }
+let estado=["Pendiente","Aceptado","Cancelado"]
 
 function cargarPersonas() {
   let texto = "";
@@ -192,8 +193,7 @@ let NuevoViaje = [];
 function crearviaje() {
   let TipodeCarga = document.querySelector("#idSelect").value;
   let PuertoOrigen = document.querySelector("#txtPuertoOrigen").value;
-  let contenedores = parseInt(
-    document.querySelector("#txtCantContenedores").value);
+  let contenedores = parseInt(document.querySelector("#txtCantContenedores").value);
   let idEmpresa = document.querySelector("#idSelect2").value;
   let Descripcion = document.querySelector("#txtDescripcion").value;
   if (contenedores < 0 || contenedores > 1000) {
@@ -203,8 +203,11 @@ function crearviaje() {
       TipodeCarga,
       PuertoOrigen,
       contenedores,
-      Descripcion
+      Descripcion,
+      this.Estado = "Pendiente"
+      
     );
+    
     viajes.push(Viaje);
     alert("viaje creado");
     mostrarTabla(viajes, "tablaViajes", idEmpresa);
