@@ -15,30 +15,21 @@ let listaImportadores = [
 let viajes = [];
 
 function inicio() {
-  // document.querySelector("#btnLogin").addEventListener("click", login);
-  // document.querySelector("#btnRegistrar").addEventListener("click", registrarImportador);
-  // document.querySelector("#btnCrearviajelogin").addEventListener("click", Mostrarcrearviaje);
-  document
-    .querySelector("#btnCrearViaje")
-    .addEventListener("click", crearviaje);
-  document
-    .querySelector("#btnPendientes")
-    .addEventListener("click", MosTablaPendinte);
-  document
-    .querySelector("#btnBuscarPendiente")
-    .addEventListener("click", BuscarPendiente);
-  document
-    .querySelector("#VolverCrearViaje")
-    .addEventListener("click", VolverCrearViaje);
+  document.querySelector("#btnLogin").addEventListener("click", login);
+  document.querySelector("#btnMostRegistro").addEventListener("click", MostRegistro);
+  document.querySelector("#btnRegistrar").addEventListener("click", registrarImportador);
+  document.querySelector("#btnMostInicio").addEventListener("click", MostInicio);
+  document.querySelector("#btnCrearviajelogin").addEventListener("click", Mostrarcrearviaje);
+  document.querySelector("#btnCrearViaje").addEventListener("click", crearviaje);
+  document.querySelector("#btnPendientes").addEventListener("click", MosTablaPendinte);
+  document.querySelector("#btnBuscarPendiente").addEventListener("click", BuscarPendiente);
+  document.querySelector("#VolverCrearViaje").addEventListener("click", VolverCrearViaje);
   cargarPersonas();
-  // mostrar("INICIAL");
+  Ocultar("INICIAL");
   Ocultar("Registro");
-  Ocultar("Login");
   Ocultar("Secciones");
   Ocultar("EMPRESA");
-  Ocultar("IMPORTADOR");
-  mostrar("crearViaje");
-  Ocultar("divTablaPendiente");
+  mostrar("IMPORTADOR");
 }
 
 function cargarPersonas() {
@@ -49,132 +40,141 @@ function cargarPersonas() {
   }
   document.querySelector("#idSelect2").innerHTML = texto;
 }
-
+//<<<<<<<<<<<<<<<<<<<<<<<Mostrar/Ocultar InicioDeSesion/Registro>>>>>>>>>>>>>>>>>>>>>
+function MostRegistro() {
+  mostrar("Registro");
+  Ocultar("Login");
+}
+function MostInicio() {
+  mostrar("Login");
+  Ocultar("Registro");
+}
+//<<<<<<<<<<<<<<<<<<<<<<<Fin Mostrar/Ocultar InicioDeSesion/Registro>>>>>>>>>>>>>>>>>>>>>
 //<<<<<<<<<<<<<<<<<<<<<<<CONTROL IMPORTADOR//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-// function registrarImportador (){
-//     let usuario = document.querySelector("#userRegistro").value;
-//     let nombre = document.querySelector("#userNombreUsuario").value;
-//     let pass = document.querySelector("#passRegistro").value;
-//     let imagen = document.querySelector("#txtFile").value;
-//     if( estaRepetidoUsuario(usuario)){
-//         alert("Usuario ya registrado.");
-//     }else if(!passValida(pass)||pass.length<5){
-//         alert("Formato de pass incorrecto.");
-//     }else{
-//         let imp = new Importador(usuario, nombre, imagen, pass);
-//         listaImportadores.push(imp);
-//         alert("Importador registrado correctamente")
-//     }
-// }
+function registrarImportador() {
+  let usuario = document.querySelector("#userRegistro").value;
+  let nombre = document.querySelector("#userNombreUsuario").value;
+  let pass = document.querySelector("#passRegistro").value;
+  let imagen = document.querySelector("#txtFile").value;
+  if (estaRepetidoUsuario(usuario)) {
+    alert("Usuario ya registrado.");
+  } else if (!passValida(pass) || pass.length < 5) {
+    alert("Formato de pass incorrecto.");
+  } else {
+    let imp = new Importador(usuario, nombre, imagen, pass);
+    listaImportadores.push(imp);
+    alert("Importador registrado correctamente");
+  }
+}
 
-// function estaRepetidoUsuario(usuario){
-//     let repetido = false;
-//     for(let emp of listaEmpresas){
-//         if(emp.usuario.toUpperCase() === usuario.toUpperCase()){
-//             repetido = true;
-//         }
-//     }
-//     for(let imp of listaImportadores){
-//         if(imp.usuario.toUpperCase() === usuario.toUpperCase()){
-//             repetido = true;
-//         }
-//     }
-//     return repetido;
-// }
+function estaRepetidoUsuario(usuario) {
+  let repetido = false;
+  for (let emp of listaEmpresas) {
+    if (emp.usuario.toUpperCase() === usuario.toUpperCase()) {
+      repetido = true;
+    }
+  }
+  for (let imp of listaImportadores) {
+    if (imp.usuario.toUpperCase() === usuario.toUpperCase()) {
+      repetido = true;
+    }
+  }
+  return repetido;
+}
 
-// comprobar contrasena
+//<<<<<<<<<<<<<<<<<<<<<<<comprobar contrasena>>>>>>>>>>>>>>>>>>>>>>
 
-// function passValida(txt){
-//     let tieneMayus = tieneMayuscula(txt)
-//     let tieneMinus = tieneMinuscula(txt)
-//     let tieneNum = tieneNumero(txt)
-//     let Valido = false
-//     if(tieneMayus === true&&tieneMinus === true && tieneNum === true){
-//         Valido = true
-//     }
-//     return Valido
-// }
-// function tieneMayuscula(txt) {
-//     let tiene = false;
-//     for (let i = 0; i < txt.length && !tiene; i++) {
-//       if (txt.charCodeAt(i) >= 65 && txt.charCodeAt(i) <= 90) {
-//         tiene = true;
-//       }
-//     }
-//     return tiene;
-//   }
-//   function tieneMinuscula(txt) {
-//     let tiene = false;
-//     for (let i = 0; i < txt.length && !tiene; i++) {
-//       if (txt.charCodeAt(i) >= 97 && txt.charCodeAt(i) <= 122) {
-//         tiene = true;
-//       }
-//     }
-//     return tiene;
-//   }
-//   function tieneNumero(txt) {
-//     let tiene = false;
-//     for (let i = 0; i < txt.length && !tiene; i++) {
-//       if (txt.charCodeAt(i) >= 48 && txt.charCodeAt(i) <= 57) {
-//         tiene = true;
-//       }
-//     }
-//     return tiene;
-//   }
-//   fin comprobar contrasena
+function passValida(txt) {
+  let tieneMayus = tieneMayuscula(txt);
+  let tieneMinus = tieneMinuscula(txt);
+  let tieneNum = tieneNumero(txt);
+  let Valido = false;
+  if (tieneMayus === true && tieneMinus === true && tieneNum === true) {
+    Valido = true;
+  }
+  return Valido;
+}
+function tieneMayuscula(txt) {
+  let tiene = false;
+  for (let i = 0; i < txt.length && !tiene; i++) {
+    if (txt.charCodeAt(i) >= 65 && txt.charCodeAt(i) <= 90) {
+      tiene = true;
+    }
+  }
+  return tiene;
+}
+function tieneMinuscula(txt) {
+  let tiene = false;
+  for (let i = 0; i < txt.length && !tiene; i++) {
+    if (txt.charCodeAt(i) >= 97 && txt.charCodeAt(i) <= 122) {
+      tiene = true;
+    }
+  }
+  return tiene;
+}
+function tieneNumero(txt) {
+  let tiene = false;
+  for (let i = 0; i < txt.length && !tiene; i++) {
+    if (txt.charCodeAt(i) >= 48 && txt.charCodeAt(i) <= 57) {
+      tiene = true;
+    }
+  }
+  return tiene;
+}
+//<<<<<<<<<<<<<<<<<<<<<<<<<fin comprobar contrasena>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 //<<<<<<<<<<<<<<<<<<<<<<<FIN CONTROL IMPORTADOR>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
 
 //<<<<<<<<<<<<<<<<<<<<LOGIN IMPORTADOR/EMPRESA>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-// function login(){
-//     let usuario = document.querySelector("#user").value;
-//     let pass = document.querySelector("#pass").value;
-//     if(loginEmpresaValido(usuario, pass)){
-//         mostrar("EMPRESA");
+function login() {
+  let usuario = document.querySelector("#user").value;
+  let pass = document.querySelector("#pass").value;
+  if (loginEmpresaValido(usuario, pass)) {
+    mostrar("EMPRESA");
+  } else if (loginImportadorValido(usuario, pass)) {
+    mostrar("IMPORTADOR");
+    Ocultar("INICIALK=");
+    Ocultar("crearViaje");
+    Ocultar("divTablaPendiente");
+  } else {
+    alert("Datos incorrectos.");
+  }
+}
 
-//     }else if(loginImportadorValido(usuario, pass)){
+function obtenerEmpresa(usuario) {
+  let respuesta = null;
+  for (let empresaActual of listaEmpresas) {
+  }
+}
 
-//         mostrar("IMPORTADOR");
+function loginEmpresaValido(usuario, password) {
+  let loginCorrecto = false;
+  for (let i = 0; i < listaEmpresas.length && !loginCorrecto; i++) {
+    let empresaActual = listaEmpresas[i];
+    if (
+      usuario.toUpperCase() === empresaActual.usuario.toUpperCase() &&
+      password === empresaActual.pass
+    ) {
+      loginCorrecto = true;
+    }
+  }
+  return loginCorrecto;
+}
 
-//     }else{
-//         alert("Datos incorrectos.")
-//     }
+function loginImportadorValido(usuario, password) {
+  let loginCorrecto = false;
+  for (let i = 0; i < listaImportadores.length && !loginCorrecto; i++) {
+    let importadorActual = listaImportadores[i];
+    if (usuario.toUpperCase() === importadorActual.usuario.toUpperCase() &&password === importadorActual.pass){
+      loginCorrecto = true;
+    }
+  }
 
-// }
-
-// function obtenerEmpresa(usuario){
-//     let respuesta = null;
-//     for(let empresaActual of listaEmpresas){
-
-//     }
-// }
-
-// function loginEmpresaValido(usuario, password){
-//     let loginCorrecto = false;
-//     for(let i = 0; i < listaEmpresas.length && !loginCorrecto ; i++){
-//         let empresaActual = listaEmpresas[i];
-//         if(usuario.toUpperCase() === empresaActual.usuario.toUpperCase() && password === empresaActual.pass){
-//             loginCorrecto = true;
-//         }
-//     }
-//     return loginCorrecto;
-// }
-
-// function loginImportadorValido(usuario, password){
-//     let loginCorrecto = false;
-//     for(let i = 0; i < listaImportadores.length && !loginCorrecto ; i++){
-//         let importadorActual = listaImportadores[i];
-//         if(usuario.toUpperCase() === importadorActual.usuario.toUpperCase() && password === importadorActual.pass){
-//             loginCorrecto = true;
-
-//         }
-//     }
-
-//     return loginCorrecto;
-
-// }
-
+  return loginCorrecto;
+}
+//<<<<<<<<<<<<<<<<<<<<Fin LOGIN IMPORTADOR/EMPRESA>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//<<<<<<<<<<<<<<<Mostrar/Ocultar Opciones del importador>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function Mostrarcrearviaje() {
   mostrar("crearViaje");
 }
@@ -186,14 +186,14 @@ function VolverCrearViaje() {
   Ocultar("divTablaPendiente");
   mostrar("crearViaje");
 }
-
+//<<<<<<<<<<<<<<<Fin Mostrar/Ocultar Opciones del importador>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//<<<<<<<<<<<<<<<<<<<<<<<Crear Viaje>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 let NuevoViaje = [];
 function crearviaje() {
   let TipodeCarga = document.querySelector("#idSelect").value;
   let PuertoOrigen = document.querySelector("#txtPuertoOrigen").value;
   let contenedores = parseInt(
-    document.querySelector("#txtCantContenedores").value
-  );
+    document.querySelector("#txtCantContenedores").value);
   let idEmpresa = document.querySelector("#idSelect2").value;
   let Descripcion = document.querySelector("#txtDescripcion").value;
   if (contenedores < 0 || contenedores > 1000) {
@@ -210,7 +210,8 @@ function crearviaje() {
     mostrarTabla(viajes, "tablaViajes", idEmpresa);
   }
 }
-// Funciont de la tabla y el boton
+//<<<<<<<<<<<<<<<<<<<<<<<Fin Crear Viaje>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//<<<<<<<<<<<<<<<<<<<<<<<<<Mostrar tabla pendientes/Buscador Viajes/Boton de eliminar>>>>>>>>>>>>>>>>>>>>>>>>>
 
 function mostrarTabla(listaviajes, idTablaViajes, idEmpresa) {
   let tabla = document.querySelector("#" + idTablaViajes);
@@ -269,22 +270,18 @@ function EliminarViaje() {
 function BuscarPendiente() {
   let descripcion = document.querySelector("#txtBuscarPendiente").value;
 
-  for (let i = 0; i < viajes.length && !encontro; i++) {
+  for (let i = 0; i < viajes.length; i++) {
     let viaje = viajes[i];
-    if (viaje.Desc.includes(descripcion)) {
+    
+    if (viaje.Desc.includes(descripcion) && descripcion != "") {
       alert("se encontro");
-    } else {
+    }
+    else if(descripcion === ""){
+        alert("Campo vacio")
+    }
+    else {
       alert("no se encontro");
     }
   }
 }
-//  function buscarCoincidencia(descA,descB){
-//      let buscar = true
-//      let descripcion = descB
-//      let desc= descA.search(descripcion)
-
-//      if (desc === -1){
-//          buscar = false
-//      }
-//      return buscar
-//  }
+//<<<<<<<<<<<<<<<<<<<<<<<<<Fin Mostrar tabla pendientes/Buscador Viajes/Boton de eliminar>>>>>>>>>>>>>>>>>>>>>>>>>

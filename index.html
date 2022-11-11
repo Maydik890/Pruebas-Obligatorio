@@ -41,7 +41,7 @@
       </ul>
       </div>
       <div id="aux">
-        <a>Iniciar sesion</a> | <a>Registrarse</a>
+        <a id="btnMostInicio">Iniciar sesion</a> | <a id="btnMostRegistro">Registrarse</a>
       </div><!-- FIN AUX -->
     </div><!-- FIN CABEZAL -->
     <div id="contenido">
@@ -56,9 +56,10 @@
                 <label for="pass">Ingrese la pass</label>
                 <input type="password" id="pass" required> <br>
                 <input type="button" value="Login" id="btnLogin">
+
             
             </form>
-          </div>
+         </div>
           <div id="Registro">
             <h3>Registro de Importador</h3>
             <form id="formImportador">
@@ -73,6 +74,7 @@
                 <input type="button" value="Registrar Importador" id="btnRegistrar">
             </form>
           </div>
+        </div>
             <!--  ------------- DIV EMPRESA---------------  -->
             <div id="EMPRESA">
                 <h2>login con empresa</h2>
@@ -85,14 +87,15 @@
             <!--  -------------DIV IMPORTADOR---------------  -->
     
     <div id="IMPORTADOR">
+      <div id="InicioImportador">
         <h2>login con importador</h2>
         <input type="button" id="btnCrearviajelogin" value="Solicitud de carga de mercadería" >
         <input type="button" id="btnSolicitudesPendientes" value="Consultar solicitudes pendientes">
         <input type="button" id="btnCancelarSolicitud" value="Cancelar solicitud de carga">
         <input type="button" id="btnVerestadística" value="Ver estadística">
         
-    </div>
-
+    
+      </div>
           <!---------------- DIV CREAR VIAJE --------------------------->
     <div id="crearViaje">
         <label for="carga">Tipo de carga</label> 
@@ -148,13 +151,14 @@
 
 
   </div>
+</div>
 
   <!-- <<<<<<<<<<<<<<<<<<<<<<<< FIN TABLA>>>>>>>>>>>>>>>>>>>>>>>>> -->
 
 
 
 
-        </div>
+        
       <div class="interior">
         <div>
           
