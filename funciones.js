@@ -1,6 +1,6 @@
 window.addEventListener("load", inicio);
 
-let usuarioLogueado = null;
+let usuarioLogueado;
 
 let listaEmpresas = [
   new Empresa("GuilleSA", "gga", "123"),
@@ -23,23 +23,20 @@ function inicio() {
   document.querySelector("#btnCrearSolicitud").addEventListener("click", crearSolicitud);
   document.querySelector("#btnPendientes").addEventListener("click", MosTablaPendinte);
   document.querySelector("#btnBuscarPendiente").addEventListener("click", BuscarPendiente);
-  document.querySelector("#VolverCrearSolicitud").addEventListener("click", VolverCrearSolicitud);
-  document.querySelector("#btnVolverInIMP").addEventListener("click", MostInicioImportador);
-  document.querySelector("#btnSolicitudesPendientes").addEventListener("click",MosTablaPendinte);
   cargarPersonas();
-  Ocultar("INICIAL");
+  mostrar("INICIAL");
   Ocultar("Registro");
   Ocultar("Secciones");
   Ocultar("EMPRESA");
-  mostrar("IMPORTADOR");
+  Ocultar("IMPORTADOR");
 }
-let estado=["Pendiente","Aceptado","Cancelado"]
+
 
 function cargarPersonas() {
   let texto = "";
   for (let i in listaEmpresas) {
-    let objPer = listaEmpresas[i];
-    texto += `<option value="${objPer.numero}"> ${objPer.numero}</option>`;
+    let objEmp = listaEmpresas[i];
+    texto += `<option value="${objEmp.numero}"> ${objEmp.nombreEmpresa}</option>`;
   }
   document.querySelector("#idSelect2").innerHTML = texto;
 }
@@ -137,11 +134,15 @@ function login() {
   let pass = document.querySelector("#pass").value;
   if (loginEmpresaValido(usuario, pass)) {
     mostrar("EMPRESA");
+    Ocultar("INICIAL")
   } else if (loginImportadorValido(usuario, pass)) {
     mostrar("IMPORTADOR");
+    mostrar("Secciones")
     Ocultar("INICIAL");
-    Ocultar("crearSolicitud");
+    mostrar("crearSolicitud")
     Ocultar("divTablaPendiente");
+    
+    Ocultar("aux")
   } else {
     alert("Datos incorrectos.");
   }
@@ -187,61 +188,58 @@ function MostInicioImportador(){
 
 function MostrarcrearSolicitud() {
   mostrar("crearSolicitud")
+  Ocultar("divTablaPendiente")
   Ocultar("InicioImportador");
 }
 function MosTablaPendinte() {
   mostrar("divTablaPendiente");
   Ocultar("crearSolicitud");
 }
-function VolverCrearSolicitud() {
-  Ocultar("divTablaPendiente");
-  mostrar("crearSolicitud");
-}
 //<<<<<<<<<<<<<<<Fin Mostrar/Ocultar Opciones del importador>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //<<<<<<<<<<<<<<<<<<<<<<<Crear Solicitud>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-let NuevoSolicitud = [];
+
 function crearSolicitud() {
   let TipodeCarga = document.querySelector("#idSelect").value;
   let PuertoOrigen = document.querySelector("#txtPuertoOrigen").value;
   let contenedores = parseInt(document.querySelector("#txtCantContenedores").value);
   let idEmpresa = document.querySelector("#idSelect2").value;
   let Descripcion = document.querySelector("#txtDescripcion").value;
-  if (contenedores < 0 || contenedores > 1000) {
+  if (contenedores < 0 || contenedores > 1000 && PuertoOrigen === "" && Descripcion === "") {
     alert("la cantidad de contenedores es invalida");
   } else {
-    let Solicitud = new Mercaderia(
+    let importador = listaImportadores[numero]
+    let empresa = listaEmpresas[idEmpresa]
+    let Solicitudes = new Solicitud(
       TipodeCarga,
       PuertoOrigen,
       contenedores,
       Descripcion,
-      this.Estado = "Pendiente"
+      this.Estado = "Pendiente",
+      this.idEmpresa = idEmpresa
       
     );
-    
-    solicitudes.push(Solicitud);
+    empresa.agregarSolicitud(Solicitudes);
+    importador.agregarSolicitudImp(Solicitudes);
+    solicitudes.push(Solicitudes);
     alert("Solicitud creado");
-    mostrarTabla(solicitudes, "tablaSolicitudes", idEmpresa);
+    mostrarTabla(solicitudes);
   }
 }
 //<<<<<<<<<<<<<<<<<<<<<<<Fin Crear Solicitud>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //<<<<<<<<<<<<<<<<<<<<<<<<<Mostrar tabla pendientes/Buscador Solicituds/Boton de eliminar>>>>>>>>>>>>>>>>>>>>>>>>>
 
-function mostrarTabla(listaSolicituds, idEmpresa) {
-  let tabla = document.querySelector("#tablaSolicitudes" );
+function mostrarTabla(listaSolicituds) {
+  let tabla = document.querySelector("#tablaSolicitudes");
   tabla.innerHTML = "";
-  let idEmp = listaEmpresas.numero;
+  let idEmp = listaEmpresas
   for (let i = 0; i < listaSolicituds.length; i++) {
     let Solicitud = listaSolicituds[i];
-    for (let i = 0; i < listaEmpresas.length; i++) {
-      let idEmp = listaEmpresas[i];
-      if (idEmpresa === idEmp.numero) {
-        idEmp = idEmp.numero;
-      }
-    }
+    
+    
     if(Solicitud.Estado === "Pendiente"){
     let texto = `
          <tr>
-            <td>${idEmp}</td>
+            <td>${Solicitud.idEmpresa}</td>
             <td>${Solicitud.id}</td>
             <td>${Solicitud.Carga}</td>
             <td>${Solicitud.PuertoOrigen}</td>
@@ -279,7 +277,7 @@ function actualizarTabla(){
   if(Solicitud.Estado === "Pendiente"){
     let texto = `
          <tr>
-            <td>${listaEmpresas.numero}</td>
+            <td>${Solicitud.empresa}</td>
             <td>${Solicitud.id}</td>
             <td>${Solicitud.Carga}</td>
             <td>${Solicitud.PuertoOrigen}</td>
@@ -298,7 +296,7 @@ function actualizarTabla(){
 
 function BuscarPendiente() {
   let descripcion = document.querySelector("#txtBuscarPendiente").value;
-  let tabla = document.querySelector("#tablaSolicituds")
+  let tabla = document.querySelector("#tablaSolicitudes")
   tabla.innerHTML = " "
   for (let i = 0; i < Solicitudes.length; i++) {
     let Solicitud = Solicitudes[i];
