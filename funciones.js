@@ -24,6 +24,8 @@ function inicio() {
   document.querySelector("#btnPendientes").addEventListener("click", MosTablaPendinte);
   document.querySelector("#btnBuscarPendiente").addEventListener("click", BuscarPendiente);
   document.querySelector("#VolverCrearViaje").addEventListener("click", VolverCrearViaje);
+  document.querySelector("#btnVolverInIMP").addEventListener("click", MostInicioImportador);
+  document.querySelector("#btnSolicitudesPendientes").addEventListener("click",MosTablaPendinte);
   cargarPersonas();
   mostrar("INICIAL");
   Ocultar("Registro");
@@ -178,6 +180,11 @@ function loginImportadorValido(usuario, password) {
 }
 //<<<<<<<<<<<<<<<<<<<<Fin LOGIN IMPORTADOR/EMPRESA>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //<<<<<<<<<<<<<<<Mostrar/Ocultar Opciones del importador>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function MostInicioImportador(){
+  Ocultar("crearViaje")
+  mostrar("InicioImportador")
+}
+
 function Mostrarcrearviaje() {
   mostrar("crearViaje")
   Ocultar("InicioImportador");
