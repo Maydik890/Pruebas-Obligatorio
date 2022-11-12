@@ -12,26 +12,26 @@ let listaImportadores = [
   new Importador("imp2", "123"),
 ];
 
-let viajes = [];
+let solicitudes = [];
 
 function inicio() {
   document.querySelector("#btnLogin").addEventListener("click", login);
   document.querySelector("#btnMostRegistro").addEventListener("click", MostRegistro);
   document.querySelector("#btnRegistrar").addEventListener("click", registrarImportador);
   document.querySelector("#btnMostInicio").addEventListener("click", MostInicio);
-  document.querySelector("#btnCrearviajelogin").addEventListener("click", Mostrarcrearviaje);
-  document.querySelector("#btnCrearViaje").addEventListener("click", crearviaje);
+  document.querySelector("#btnCrearSolicitudlogin").addEventListener("click", MostrarcrearSolicitud);
+  document.querySelector("#btnCrearSolicitud").addEventListener("click", crearSolicitud);
   document.querySelector("#btnPendientes").addEventListener("click", MosTablaPendinte);
   document.querySelector("#btnBuscarPendiente").addEventListener("click", BuscarPendiente);
-  document.querySelector("#VolverCrearViaje").addEventListener("click", VolverCrearViaje);
+  document.querySelector("#VolverCrearSolicitud").addEventListener("click", VolverCrearSolicitud);
   document.querySelector("#btnVolverInIMP").addEventListener("click", MostInicioImportador);
   document.querySelector("#btnSolicitudesPendientes").addEventListener("click",MosTablaPendinte);
   cargarPersonas();
-  mostrar("INICIAL");
+  Ocultar("INICIAL");
   Ocultar("Registro");
   Ocultar("Secciones");
   Ocultar("EMPRESA");
-  Ocultar("IMPORTADOR");
+  mostrar("IMPORTADOR");
 }
 let estado=["Pendiente","Aceptado","Cancelado"]
 
@@ -140,7 +140,7 @@ function login() {
   } else if (loginImportadorValido(usuario, pass)) {
     mostrar("IMPORTADOR");
     Ocultar("INICIAL");
-    Ocultar("crearViaje");
+    Ocultar("crearSolicitud");
     Ocultar("divTablaPendiente");
   } else {
     alert("Datos incorrectos.");
@@ -181,26 +181,26 @@ function loginImportadorValido(usuario, password) {
 //<<<<<<<<<<<<<<<<<<<<Fin LOGIN IMPORTADOR/EMPRESA>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //<<<<<<<<<<<<<<<Mostrar/Ocultar Opciones del importador>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function MostInicioImportador(){
-  Ocultar("crearViaje")
+  Ocultar("crearSolicitud")
   mostrar("InicioImportador")
 }
 
-function Mostrarcrearviaje() {
-  mostrar("crearViaje")
+function MostrarcrearSolicitud() {
+  mostrar("crearSolicitud")
   Ocultar("InicioImportador");
 }
 function MosTablaPendinte() {
   mostrar("divTablaPendiente");
-  Ocultar("crearViaje");
+  Ocultar("crearSolicitud");
 }
-function VolverCrearViaje() {
+function VolverCrearSolicitud() {
   Ocultar("divTablaPendiente");
-  mostrar("crearViaje");
+  mostrar("crearSolicitud");
 }
 //<<<<<<<<<<<<<<<Fin Mostrar/Ocultar Opciones del importador>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//<<<<<<<<<<<<<<<<<<<<<<<Crear Viaje>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-let NuevoViaje = [];
-function crearviaje() {
+//<<<<<<<<<<<<<<<<<<<<<<<Crear Solicitud>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+let NuevoSolicitud = [];
+function crearSolicitud() {
   let TipodeCarga = document.querySelector("#idSelect").value;
   let PuertoOrigen = document.querySelector("#txtPuertoOrigen").value;
   let contenedores = parseInt(document.querySelector("#txtCantContenedores").value);
@@ -209,7 +209,7 @@ function crearviaje() {
   if (contenedores < 0 || contenedores > 1000) {
     alert("la cantidad de contenedores es invalida");
   } else {
-    let Viaje = new Mercaderia(
+    let Solicitud = new Mercaderia(
       TipodeCarga,
       PuertoOrigen,
       contenedores,
@@ -218,87 +218,103 @@ function crearviaje() {
       
     );
     
-    viajes.push(Viaje);
-    alert("viaje creado");
-    mostrarTabla(viajes, "tablaViajes", idEmpresa);
+    solicitudes.push(Solicitud);
+    alert("Solicitud creado");
+    mostrarTabla(solicitudes, "tablaSolicitudes", idEmpresa);
   }
 }
-//<<<<<<<<<<<<<<<<<<<<<<<Fin Crear Viaje>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//<<<<<<<<<<<<<<<<<<<<<<<<<Mostrar tabla pendientes/Buscador Viajes/Boton de eliminar>>>>>>>>>>>>>>>>>>>>>>>>>
+//<<<<<<<<<<<<<<<<<<<<<<<Fin Crear Solicitud>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//<<<<<<<<<<<<<<<<<<<<<<<<<Mostrar tabla pendientes/Buscador Solicituds/Boton de eliminar>>>>>>>>>>>>>>>>>>>>>>>>>
 
-function mostrarTabla(listaviajes, idTablaViajes, idEmpresa) {
-  let tabla = document.querySelector("#" + idTablaViajes);
+function mostrarTabla(listaSolicituds, idEmpresa) {
+  let tabla = document.querySelector("#tablaSolicitudes" );
   tabla.innerHTML = "";
   let idEmp = listaEmpresas.numero;
-  for (let i = 0; i < listaviajes.length; i++) {
-    let viaje = listaviajes[i];
+  for (let i = 0; i < listaSolicituds.length; i++) {
+    let Solicitud = listaSolicituds[i];
     for (let i = 0; i < listaEmpresas.length; i++) {
       let idEmp = listaEmpresas[i];
       if (idEmpresa === idEmp.numero) {
         idEmp = idEmp.numero;
       }
     }
-
+    if(Solicitud.Estado === "Pendiente"){
     let texto = `
          <tr>
             <td>${idEmp}</td>
-            <td>${viaje.id}</td>
-            <td>${viaje.Carga}</td>
-            <td>${viaje.PuertoOrigen}</td>
-            <td>${viaje.CantCont}</td>
-            <td>${viaje.Desc}</td>
-           <td><input type="button" value="X" class="btnEliminar" id="${viaje.id}-Eliminar" data-Eliminar="${viaje.id}"></td>
+            <td>${Solicitud.id}</td>
+            <td>${Solicitud.Carga}</td>
+            <td>${Solicitud.PuertoOrigen}</td>
+            <td>${Solicitud.CantCont}</td>
+            <td>${Solicitud.Desc}</td>
+           <td><input type="button" value="X" class="btnEliminar" id="${Solicitud.id}-Eliminar" data-Eliminar="${Solicitud.id}"></td>
+         </tr>`;
+    tabla.innerHTML += texto;
+  }}
+  let botonesEliminar = document.querySelectorAll(".btnEliminar");
+  for (let i = 0; i < botonesEliminar.length; i++) {
+    let boton = botonesEliminar[i];
+    boton.addEventListener("click", EliminarSolicitud);
+  }
+}
+function EliminarSolicitud() {
+  let numeroContenido = parseInt(this.id);
+  let sigoBuscado = true;
+  for (let i = 0; i < solicitudes.length && sigoBuscado; i++) {
+      let objsolicitudes = solicitudes[i];
+      if (objsolicitudes.id === numeroContenido) {
+          objsolicitudes.Estado = "Cancelada"
+          sigoBuscado = false;
+      }
+  }
+ actualizarTabla()
+  ;
+}
+
+function actualizarTabla(){
+  let tabla = document.querySelector("#tablaSolicitudes");
+  tabla.innerHTML = ""
+  for (let i = 0; i < solicitudes.length; i++) {
+    let Solicitud = solicitudes[i];
+  if(Solicitud.Estado === "Pendiente"){
+    let texto = `
+         <tr>
+            <td>${listaEmpresas.numero}</td>
+            <td>${Solicitud.id}</td>
+            <td>${Solicitud.Carga}</td>
+            <td>${Solicitud.PuertoOrigen}</td>
+            <td>${Solicitud.CantCont}</td>
+            <td>${Solicitud.Desc}</td>
+           <td><input type="button" value="X" class="btnEliminar" id="${Solicitud.id}-Eliminar" data-Eliminar="${Solicitud.id}"></td>
          </tr>`;
     tabla.innerHTML += texto;
   }
   let botonesEliminar = document.querySelectorAll(".btnEliminar");
   for (let i = 0; i < botonesEliminar.length; i++) {
     let boton = botonesEliminar[i];
-    boton.addEventListener("click", EliminarViaje);
+    boton.addEventListener("click", EliminarSolicitud);
   }
-}
-function EliminarViaje() {
-  let idEliminar = parseInt(this.id); //this en este contexto hace referencia al botón
-  let indiceAEliminar = -1;
-  let encontre = false;
-  for (let i = 0; i < viajes.length && !encontre; i++) {
-    let viaje = viajes[i];
-    console.log(this.id);
-    if (viaje.id === idEliminar) {
-      indiceAEliminar = i;
-      encontre = true;
-    }
-  }
-  //let cantidadDeElementosAEliminar = 1;
-  let confirmar = confirm(
-    `¿Está seguro que quiere eliminar la solicitud de viaje ${viajes[indiceAEliminar].id}?`
-  );
-  console.log(confirmar);
-  if (confirmar) {
-    viajes.splice(indiceAEliminar, 1);
-    mostrarTabla(viajes, "tablaViajes", idEmpresa);
-  }
-}
+}}
 
 function BuscarPendiente() {
   let descripcion = document.querySelector("#txtBuscarPendiente").value;
-  let tabla = document.querySelector("#tablaViajes")
+  let tabla = document.querySelector("#tablaSolicituds")
   tabla.innerHTML = " "
-  for (let i = 0; i < viajes.length; i++) {
-    let viaje = viajes[i];
-    if (viaje.Desc.includes(descripcion) && descripcion != "") {
+  for (let i = 0; i < Solicitudes.length; i++) {
+    let Solicitud = Solicitudes[i];
+    if (Solicitud.Desc.includes(descripcion) && descripcion != "") {
       let texto = `
          <tr>
             <td>${"hola"}</td>
-            <td>${viaje.id}</td>
-            <td>${viaje.Carga}</td>
-            <td>${viaje.PuertoOrigen}</td>
-            <td>${viaje.CantCont}</td>
-            <td>${viaje.Desc}</td>
-           <td><input type="button" value="X" class="btnEliminar" id="${viaje.id}-Eliminar" data-Eliminar="${viaje.id}"></td>
+            <td>${Solicitud.id}</td>
+            <td>${Solicitud.Carga}</td>
+            <td>${Solicitud.PuertoOrigen}</td>
+            <td>${Solicitud.CantCont}</td>
+            <td>${Solicitud.Desc}</td>
+           <td><input type="button" value="X" class="btnEliminar" id="${Solicitud.id}-Eliminar" data-Eliminar="${Solicitud.id}"></td>
          </tr>`;
     tabla.innerHTML += texto;;
     }
   }
 }
-//<<<<<<<<<<<<<<<<<<<<<<<<<Fin Mostrar tabla pendientes/Buscador Viajes/Boton de eliminar>>>>>>>>>>>>>>>>>>>>>>>>>
+//<<<<<<<<<<<<<<<<<<<<<<<<<Fin Mostrar tabla pendientes/Buscador Solicituds/Boton de eliminar>>>>>>>>>>>>>>>>>>>>>>>>>
