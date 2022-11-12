@@ -25,11 +25,11 @@ function inicio() {
   document.querySelector("#btnBuscarPendiente").addEventListener("click", BuscarPendiente);
   document.querySelector("#VolverCrearViaje").addEventListener("click", VolverCrearViaje);
   cargarPersonas();
-  Ocultar("INICIAL");
+  mostrar("INICIAL");
   Ocultar("Registro");
   Ocultar("Secciones");
   Ocultar("EMPRESA");
-  mostrar("IMPORTADOR");
+  Ocultar("IMPORTADOR");
 }
 let estado=["Pendiente","Aceptado","Cancelado"]
 
@@ -65,6 +65,8 @@ function registrarImportador() {
     let imp = new Importador(usuario, nombre, imagen, pass);
     listaImportadores.push(imp);
     alert("Importador registrado correctamente");
+    Ocultar("Registro")
+    mostrar("Login")
   }
 }
 
@@ -135,7 +137,7 @@ function login() {
     mostrar("EMPRESA");
   } else if (loginImportadorValido(usuario, pass)) {
     mostrar("IMPORTADOR");
-    Ocultar("INICIALK=");
+    Ocultar("INICIAL");
     Ocultar("crearViaje");
     Ocultar("divTablaPendiente");
   } else {
@@ -177,7 +179,8 @@ function loginImportadorValido(usuario, password) {
 //<<<<<<<<<<<<<<<<<<<<Fin LOGIN IMPORTADOR/EMPRESA>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //<<<<<<<<<<<<<<<Mostrar/Ocultar Opciones del importador>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function Mostrarcrearviaje() {
-  mostrar("crearViaje");
+  mostrar("crearViaje")
+  Ocultar("InicioImportador");
 }
 function MosTablaPendinte() {
   mostrar("divTablaPendiente");
@@ -272,18 +275,22 @@ function EliminarViaje() {
 
 function BuscarPendiente() {
   let descripcion = document.querySelector("#txtBuscarPendiente").value;
-
+  let tabla = document.querySelector("#tablaViajes")
+  tabla.innerHTML = " "
   for (let i = 0; i < viajes.length; i++) {
     let viaje = viajes[i];
-    
     if (viaje.Desc.includes(descripcion) && descripcion != "") {
-      alert("se encontro");
-    }
-    else if(descripcion === ""){
-        alert("Campo vacio")
-    }
-    else {
-      alert("no se encontro");
+      let texto = `
+         <tr>
+            <td>${"hola"}</td>
+            <td>${viaje.id}</td>
+            <td>${viaje.Carga}</td>
+            <td>${viaje.PuertoOrigen}</td>
+            <td>${viaje.CantCont}</td>
+            <td>${viaje.Desc}</td>
+           <td><input type="button" value="X" class="btnEliminar" id="${viaje.id}-Eliminar" data-Eliminar="${viaje.id}"></td>
+         </tr>`;
+    tabla.innerHTML += texto;;
     }
   }
 }
