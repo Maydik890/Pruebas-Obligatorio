@@ -24,21 +24,44 @@
     <div id="cabezal" class="clearfix">
       <img id="logo" src="https://p1.develotion.com/2022_08/logo.png" alt="logo">
       <div id="Secciones">
-        <ul id="navPrincipal">
-        <li>
-          <a style="font-size: 10px;" id="btnCrearSolicitudlogin">Solicitud de carga</a>
-        </li>
-        <li>
-          <a style="font-size: 10px;" id="btnPendientes">Solicitudes pendientes</a>
-        </li>
-        <li>
-          <a style="font-size: 10px;"></a>
-        </li>
-        <li>
-          <a style="font-size: 10px;">Información estadística</a>
-        </li>
-  
-      </ul>
+        <div id="navEmpresa">
+            <ul id="navPrincipal">
+                <li>
+                  <a style="font-size: 10px;" id="btnSolicitudBuque">Crear solicitud de buque</a>
+                </li>
+                <li>
+                  <a style="font-size: 10px;" id="btnPendienteaMtvdeo">Asignar solicitud</a>
+                </li>
+                <li>
+                    <a style="font-size: 10px;" id="btnRollover">Rollover</a>
+                </li>
+                <li>
+                    <a style="font-size: 10px;" id="btnManifestoDeCarga">Manifesto de carga</a>
+                </li>
+          
+              </ul>
+
+        </div>
+        <div id="navImportador">
+            <ul id="navPrincipal">
+                <li>
+                  <a style="font-size: 10px;" id="btnCrearSolicitudlogin">Solicitud de carga</a>
+                </li>
+                <li>
+                  <a style="font-size: 10px;" id="btnPendientes">Solicitudes pendientes</a>
+                </li>
+                <li>
+                    <a style="font-size: 10px;">Información estadística</a>
+                </li>
+                <li>
+                    <a style="font-size: 10px;"></a>
+                </li>
+          
+              </ul>
+
+
+        </div>
+       
       </div>
       <div id="aux">
         <a id="btnMostInicio">Iniciar sesion</a> | <a id="btnMostRegistro">Registrarse</a>
@@ -77,21 +100,45 @@
         </div>
             <!--  ------------- DIV EMPRESA---------------  -->
             <div id="EMPRESA">
-                <h2>login con empresa</h2>
-        <input type="button" id="btnSolicitudBuque" value="Crear Solicitud de un buque" >
-        <input type="button" id="btnPendienteaMtvdeo" value="Asignar Solicitud">
-        <input type="button" id="btnRollover" value="Rollover de carga>
-        <input type="button" id="btnManifestoDeCarga" value="Manifesto de carga">
+        
+
+        <div id="CrearSolicitudEmpresa">
+         <label for="buque">Nombre de buque</label>
+        <input type="text" id="txtNombreBuque" > <br>
+        <label for="cantContenedores">Cantidad de contenedores</label>
+        <input type="number" id="txtCantidadContenedores" > <br> 
+        <label for="Fecha">Fecha de llegada</label>
+        <input type= "date" id="txtFecha" > <br>
+        <input type="button" value="Crear viaje" id="txtViajeBuque">
+
+
+        </div>
+
+        <div id="AsignarSolicitud">
+        
+
+            <tr>
+                <th>Tipo de carga</th>
+                <th>Puerto de Origen</th>
+                <th>Cantidad de contenedores</th>
+                <th>Descripcion</th>
+                <th>Estado</th>
+                
+            </tr>
+
+        </div>
+
+
 
             </div>
+
+            
             <!--  -------------DIV IMPORTADOR---------------  -->
     
     <div id="IMPORTADOR">
       <div id="InicioImportador">
         <h3>login con importador</h3>
         
-        
-    
       </div>
           <!---------------- DIV CREAR Solicitud --------------------------->
     <div id="crearSolicitud">
@@ -99,7 +146,7 @@
         <select id="idSelect">
             <option id="idCp">Carga peligrosa</option>
             <option id="idCg">Carga general</option>
-            <option value="idRg">Refrigerado</option>
+            <option id="idRg">Refrigerado</option>
         </select> <br>
         <label for="puerto" id="idPuertoOrigen">Puerto de Origen</label>
         <input type="text" id="txtPuertoOrigen"><br>
@@ -111,7 +158,7 @@
         <label for="descripcion">Descripcion</label>  <br>
         <textarea id="txtDescripcion" cols="30" rows="10"></textarea> <br>
         <input type="button" value="Crear Solicitud" id="btnCrearSolicitud">
-        <input type="button" value="Mostrar Solicituds pendientes" id="btnPendientes">
+        <!-- //<input type="button" value="Mostrar Solicituds pendientes" id="btnPendientes"> -->
     </div>
     <!-- <<<<<<<<<<<<<<<<<<<<<<<<< FIN CREAR Solicitud >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
     <br>
@@ -173,3 +220,16 @@
 </body>
 </body>
 </html>
+
+
+
+<!-- <label for="buque">Nombre de buque</label>
+<input type="text" id="txtNombreBuque" required> <br>
+<label for="cantContenedores">Cantidad de contenedores</label>
+<input type="number" id="txtCantidadContenedores" required> <br>
+<label for="LineaCarga">ID linea de carga</label>
+<input type="text" id="txtLineadeCarga" required> <br>
+<label for="Fecha">Fecha de llegada</label>
+<input type= "datetime" id="txtFecha" required> <br>
+<label for="Autonumerico">ID de viaje</label>
+<input type="number" id="txtIDviaje" required> <br> -->

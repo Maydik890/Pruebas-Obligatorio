@@ -1,3 +1,5 @@
+
+
 let idEmpresa = 0;
 class Empresa {
   constructor(nombreEmpresa, usuario, pass) {
@@ -42,3 +44,21 @@ class Solicitud {
     
   }
 
+  let idAutomatico = 0;
+  
+  class CrearViaje { 
+
+    constructor(NombreBuque, CantMaxContenedores, Fecha){
+        this.NombreBuque = NombreBuque;
+        this.MaxContenedores = CantMaxContenedores;
+        this.Empresa = [];
+        this.Automatico = idAutomatico++;
+        this.fecha = Fecha;
+
+    }
+    agregarViajeEmp(unViaje){
+        this.Empresa.push(unViaje)
+    }
+    
+
+  }
