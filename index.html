@@ -103,30 +103,61 @@
         
 
         <div id="CrearSolicitudEmpresa">
-         <label for="buque">Nombre de buque</label>
+        <label for="buque">Nombre de buque</label>
         <input type="text" id="txtNombreBuque" > <br>
         <label for="cantContenedores">Cantidad de contenedores</label>
         <input type="number" id="txtCantidadContenedores" > <br> 
         <label for="Fecha">Fecha de llegada</label>
         <input type= "date" id="txtFecha" > <br>
         <input type="button" value="Crear viaje" id="txtViajeBuque">
-
-
         </div>
-
         <div id="AsignarSolicitud">
-        
-
-            <tr>
-                <th>Tipo de carga</th>
-                <th>Puerto de Origen</th>
-                <th>Cantidad de contenedores</th>
-                <th>Descripcion</th>
-                <th>Estado</th>
-                
-            </tr>
-
+          <table>
+            <thead>
+                <tr>
+                    
+                    <th>ID Solicitud</th>
+                    <th>Tipo de carga</th>
+                    <th>Puerto Origen</th>
+                    <th>Cantidad Contenedores</th>
+                    <th>Descripcion</th>
+                    <th>ID Viaje</th>
+                    <th>Asignar solicitud</th>
+                    
+                </tr>
+            </thead>
+            <tbody id="tablaAsignarSolicitudes">
+                <tr>
+                    <td colspan="7">Sin Datos</td>
+                </tr>
+            </tbody>
+        </table>
         </div>
+        <div id="Rollover">
+          <select id="slcVerViajes"></select>
+          <input type="button" id="btnVerViajes" value="Ver solicitudes del viaje">
+          <table>
+            <thead>
+                <tr>
+                    
+                    <th>ID Solicitud</th>
+                    <th>Tipo de carga</th>
+                    <th>Puerto Origen</th>
+                    <th>Cantidad Contenedores</th>
+                    <th>Descripcion</th>
+                    <th>ID Viaje</th>
+                    <th>Asignar solicitud</th>
+                    
+                </tr>
+            </thead>
+            <tbody id="tablaRollover">
+                <tr>
+                    <td colspan="7">Sin Datos</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
 
 
 

@@ -54,11 +54,13 @@ class Solicitud {
         this.Empresa = [];
         this.Automatico = idAutomatico++;
         this.fecha = Fecha;
-
+        this.solicitudes = [];
     }
     agregarViajeEmp(unViaje){
         this.Empresa.push(unViaje)
     }
-    
+    agregarSolicitud(solicitud){
+      this.solicitudes.push(solicitud)
+  }
 
   }

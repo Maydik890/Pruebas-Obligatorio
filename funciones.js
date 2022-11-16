@@ -14,8 +14,8 @@ let listaImportadores = [
 ];
 
 let solicitudes = [
-     new Solicitud("Carga Peligrosa", "Bombas", "Buceo", "200", "Pendiente", 0),
-     new Solicitud ("Refrigerado", "Carne", "Viña", "300", "Pendiente", 1)
+     new Solicitud("Carga Peligrosa", "Buceo", "200", "Bombas", "Pendiente", 0),
+     new Solicitud ("Refrigerado", "Viña", "300", "Carne", "Pendiente", 1)
 ];
 
 function RecorrerSolicitud (){
@@ -40,8 +40,9 @@ function inicio() {
     document.querySelector("#btnCrearSolicitud").addEventListener("click", crearSolicitud);
     document.querySelector("#btnPendientes").addEventListener("click", MosTablaPendinte);
     document.querySelector("#btnBuscarPendiente").addEventListener("click", BuscarPendiente);
-    document.querySelector("#btnSolicitudBuque").addEventListener("click", CrearViajeBuque);
-    document.querySelector("#btnPendienteaMtvdeo").addEventListener("click", TablaAsignarSolicitud)
+    document.querySelector("#txtViajeBuque").addEventListener("click", CrearViajeBuque);
+    document.querySelector("#btnPendienteaMtvdeo").addEventListener("click", TablaAsignarSolicitud);
+    document.querySelector("#btnVerViajes").addEventListener("click", TablaRollover);
     cargarPersonas();
     mostrar("INICIAL");
     Ocultar("Registro");
@@ -175,6 +176,7 @@ function login() {
         mostrar("navEmpresa")
         Ocultar("navImportador")
         Ocultar("INICIAL")
+        Ocultar("AsignarSolicitud")
     } else if (loginImportadorValido(usuario, pass)) {
         for (let i = 0; i < listaImportadores.length; i++) {
             let importador = listaImportadores[i];
@@ -278,7 +280,8 @@ function CrearViajeBuque() {
         viaje.push(ViajeBuque);
         alert("Solicitud creado");
         mostrarTabla(solicitudes);
-
+        TablaAsignarSolicitud();
+        cargarViaje();
         // let idautomatic = listaViajes
     
 
@@ -291,33 +294,137 @@ function cargarViajeAsignar(){
     }
     document.querySelector("#SelectAsignarViaje").innerHTML = texto;
 }
-
-function TablaAsignarSolicitud(listaSolicituds) {
-    let tabla = document.querySelector("#tablaSolicitudes");
+//<td> <select id="SelectAsignarViaje"></select></td>
+function TablaAsignarSolicitud() {
+    let tabla = document.querySelector("#tablaAsignarSolicitudes");
     tabla.innerHTML = "";
-    let idEmp = listaEmpresas
-    for (let i = 0; i < listaSolicituds.length; i++) {
-        let Solicitud = listaSolicituds[i];
+    
+    // let idEmp = listaEmpresas
+    for (let i = 0; i < solicitudes.length; i++) {
+        let Solicitud = solicitudes[i];
 
 
         if (Solicitud.Estado === "Pendiente") {
+            let IDv="";
+            for(let i = 0; i<listaViajes.length; i++){
+             
+             let ObjViaje = listaViajes[i]
+             IDv += `<option id=${ObjViaje.Automatico}>${ObjViaje.Automatico}</option>`
+            }
             let texto = `
          <tr>
-            <td>${Solicitud.idEmpresa}</td>
             <td>${Solicitud.id}</td>
             <td>${Solicitud.Carga}</td>
             <td>${Solicitud.PuertoOrigen}</td>
             <td>${Solicitud.CantCont}</td>
             <td>${Solicitud.Desc}</td>
-            <td> <select id="SelectAsignarViaje"></select></td>
-           <td><input type="button" value="X" class="btnEliminar" id="${Solicitud.id}-Eliminar" data-Eliminar="${Solicitud.id}"></td>
+            <td> <select id="SelectAsignarViaje">${IDv}</select></td>
+           <td><input type="button" value="Asignar" class="btnAsignar" id="${Solicitud.id}-Eliminar" data-Eliminar="${Solicitud.id}"></td>
          </tr>`;
             tabla.innerHTML += texto;
+        
         }
+        mostrar("AsignarSolicitud")
+    }
+    let botonesAsignar = document.querySelectorAll(".btnAsignar");
+    for (let i = 0; i < botonesAsignar.length; i++) {
+        let boton = botonesAsignar[i];
+        boton.addEventListener("click", AsignarSolicitud);
     }
 }
+function AsignarSolicitud() {
+    let IdViaje = parseInt(document.querySelector("#SelectAsignarViaje").value)
+    let numeroContenido = parseInt(this.id);
+    let sigoBuscado = true;
+    ;
+    for (let i = 0; i < solicitudes.length && sigoBuscado; i++) {
+        let objsolicitudes = solicitudes[i];
+        if (objsolicitudes.id === numeroContenido) {
+            objsolicitudes.Estado = "Confirmada"
+            sigoBuscado = false;
+            for(let i = 0; i<listaViajes.length; i++){
+                let viaje = listaViajes[i];
+               if(viaje.Automatico === IdViaje){
+            viaje.agregarSolicitud(objsolicitudes);
+        }}}
+    }
+    
+    TablaAsignarSolicitud();
+}
+function cargarViaje() {
+    let texto = "";
+    for (let i in listaViajes) {
+        let objVia = listaViajes[i];
+        texto += `<option value="${objVia.Automatico}"> ${objVia.Automatico}</option>`;
+    }
+    document.querySelector("#slcVerViajes").innerHTML = texto;
+}
+function TablaRollover() {
+    let tabla = document.querySelector("#tablaRollover");
+    tabla.innerHTML = "";
+    
+    let idViaje = parseInt(document.querySelector("#slcVerViajes").value)
+    let slcViaje = document.querySelector("#slcVerViajes").selectedindex
+    // let idEmp = listaEmpresas
+    for (let i = 0; i < listaViajes.length; i++) {
+        let Viajes = listaViajes[i];
+        let indiceSoli;
+        for(let i = 0; i<Viajes.solicitudes.length; i++){
+            indiceSoli = Viajes.solicitudes[i]
+        }
+            
+    
+        if (Viajes.Automatico === idViaje) {
+            let IDv="";
+            for(let i = 0; i<listaViajes.length; i++){
+             
+             let ObjViaje = listaViajes[i]
+             
+             IDv += `<option id=${ObjViaje.Automatico}>${ObjViaje.Automatico}</option>`}
+            
+            let texto = `
+         <tr>
+            <td>${indiceSoli.CantCont}</td>
+            <td>${indiceSoli.Desc}</td>
+            <td>${indiceSoli.Carga}</td>
+            <td>${indiceSoli.id}</td>
+            <td>${indiceSoli.PuertoOrigen}</td>
+            <td> <select id="SelectRollearViaje">${IDv}</select></td>
+            <td><input type="button" value="Asignar" class="btnRollover" id="${indiceSoli.id}-Eliminar" data-Eliminar="${indiceSoli.id}"></td>
+         </tr>`;
+            tabla.innerHTML += texto;
+        
+        }
+        
+    }
+     let botonesAsignar = document.querySelectorAll(".btnRollover");
+     for (let i = 0; i < botonesAsignar.length; i++) {
+         let boton = botonesAsignar[i];
+         boton.addEventListener("click", Rollover);
+     }
+}
+ function Rollover() { 
+     let IdViaje = parseInt(document.querySelector("#SelectRollearViaje").value)
+     let numeroContenido = parseInt(this.id);
+     let pos = -1;
+     ;
+     for (let i = 0; i < listaViajes.length && pos-1; i++) {
+         let objviajes = listaViajes[i];
+         let objsoli;
 
-
+         for (let i = 0; i < objviajes.solicitudes.length; i++){
+             objsoli = objviajes.solicitudes[i]
+         }
+         if (objsoli.id === numeroContenido) {
+             pos = [i]
+             objsoli.splice(pos,1);
+             for(let i = 0; i<listaViajes.length; i++){
+                let viaje = listaViajes[i];
+                if(viaje.Automatico === IdViaje){
+             viaje.agregarSolicitud(objsolicitudes);
+         }}}
+     }
+  }
 //<<<<<<<<<<<<<<<<<<<<<<<Crear Solicitud>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 function crearSolicitud() {
@@ -353,7 +460,7 @@ function crearSolicitud() {
 function mostrarTabla(listaSolicituds) {
     let tabla = document.querySelector("#tablaSolicitudes");
     tabla.innerHTML = "";
-    let idEmp = listaEmpresas
+    
     for (let i = 0; i < listaSolicituds.length; i++) {
         let Solicitud = listaSolicituds[i];
 
