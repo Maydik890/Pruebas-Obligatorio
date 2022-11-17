@@ -21,6 +21,7 @@ class Importador {
     this.nombre = nombre;
     this.imagen = imagen;
     this.pass = pass;
+    this.Estado = true
     this.solicitudes = []
   }
   agregarSolicitudImp(unaSolicitud){
@@ -31,7 +32,7 @@ class Importador {
 
 let idViaje = 0;
 class Solicitud {
-  constructor(TipodeCarga, PuertoOrigen, CantidadContenedores, Descripcion, Estado, Empresa) {
+  constructor(TipodeCarga, PuertoOrigen, CantidadContenedores, Descripcion, Estado, Empresa, Importador) {
     this.id = idViaje++;
     this.Carga = TipodeCarga;
     this.Desc = Descripcion;
@@ -39,6 +40,7 @@ class Solicitud {
     this.CantCont = CantidadContenedores;
     this.Estado = Estado;
     this.idEmpresa = Empresa
+    this.idImportador=Importador
   }
   
     

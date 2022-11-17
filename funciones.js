@@ -9,24 +9,18 @@ let listaEmpresas = [
 ];
 
 let listaImportadores = [
-    new Importador("imp1", "123"),
-    new Importador("imp2", "123"),
+    new Importador("imp1","nombre","img", "Hola123"),
+    new Importador("imp2", "nombre","img","Hola123"),
 ];
 
 let solicitudes = [
-     new Solicitud("Carga Peligrosa", "Buceo", "200", "Bombas", "Pendiente", 0),
-     new Solicitud ("Refrigerado", "Viña", "300", "Carne", "Pendiente", 1)
+     new Solicitud("Carga Peligrosa", "Buceo", "200", "Bombas", "Cancelada", 0, 1),
+     new Solicitud ("Refrigerado", "Viña", "300", "Carne", "Cancelada", 0, 1),
+     new Solicitud("Carga Peligrosa", "Buceo", "200", "Bombas", "Pendiente", 0, 1),
+     new Solicitud ("Refrigerado", "Viña", "300", "Carne", "Pendiente", 1, 1)
 ];
 
-function RecorrerSolicitud (){
-    let id = "";
-    for (let i = 0; i < solicitudes.length; i++) {
-        id = solicitudes[i];  
-        if(id.idEmpresa){
-            Empresa.agregarSolicitud(id);
-        }
-    }
-}
+
 
 
 let listaViajes = [];
@@ -50,9 +44,12 @@ function inicio() {
     Ocultar("EMPRESA");
     Ocultar("IMPORTADOR");
     CargarPrecargas()
+    deshabilitarImportador()
+   
 }
 function CargarPrecargas(){
     let idEmp;
+    let idImp;
     let idSol
     for(let i = 0; i < solicitudes.length; i++){
         idSol = solicitudes[i]
@@ -60,13 +57,14 @@ function CargarPrecargas(){
             idEmp = listaEmpresas[i]
         if(idEmp.numero === idSol.idEmpresa){
     idEmp.agregarSolicitud(idSol)
-}}}}
-
-
-
-function buscarobj() {
-
+}}
+for (let i = 0; i < listaImportadores.length; i++){
+    idImp = listaImportadores[i]
+if(idImp.numero === idSol.idImportador){
+idImp.agregarSolicitudImp(idSol)
+}}}
 }
+
 
 
 function cargarPersonas() {
@@ -183,7 +181,7 @@ function login() {
 
 
         }
-
+       
         mostrar("Secciones")
         mostrar("EMPRESA");
         mostrar("navEmpresa")
@@ -255,47 +253,39 @@ function MostrarcrearSolicitud() {
     mostrar("crearSolicitud")
     Ocultar("divTablaPendiente")
     Ocultar("InicioImportador");
+    deshabilitarImportador()
+   
 }
 
 function MosTablaPendinte() {
     mostrar("divTablaPendiente");
     Ocultar("crearSolicitud");
+    deshabilitarImportador();
+    mostrarTabla();
 }
 //<<<<<<<<<<<<<<<Fin Mostrar/Ocultar Opciones del importador>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function CrearViajeBuque() {
     let NombreBuque = document.querySelector("#txtNombreBuque").value;
     let CantidadMaxCont = parseInt(document.querySelector("#txtCantidadContenedores").value);
-    // let idEmpresabuque = (document.querySelector("#txtLineadeCarga").value);
     let FechaLlegada = document.querySelector("#txtFecha").value;
     let indiceEmpresa = "";
-
-    
-
-    
-        // let importador = listaImportadores[numero]
         let viaje = listaViajes;
         let ViajeBuque = new CrearViaje(
             NombreBuque,
             CantidadMaxCont,
             FechaLlegada
         );
-        // let idautomatico = "";
         
-        // for (let i = 0; i < listaViajes.length; i++) {
-        //     let ultimoViaje = listaViajes[i];
-        //     if(ultimoViaje === listaViajes.length-1){
-        //         indiceEmpresa = ultimoViaje;
-
-        //     }
-        // }
+        
+     
         ViajeBuque.agregarViajeEmp(usuarioLogueado);
-        // importador.agregarSolicitudImp(Solicitudes);
+        
         viaje.push(ViajeBuque);
         alert("Solicitud creado");
         mostrarTabla(solicitudes);
         TablaAsignarSolicitud();
         cargarViaje();
-        // let idautomatic = listaViajes
+       
     
 
 }
@@ -307,12 +297,11 @@ function cargarViajeAsignar(){
     }
     document.querySelector("#SelectAsignarViaje").innerHTML = texto;
 }
-//<td> <select id="SelectAsignarViaje"></select></td>
+
 function TablaAsignarSolicitud() {
     let tabla = document.querySelector("#tablaAsignarSolicitudes");
     tabla.innerHTML = "";
-    
-    // let idEmp = listaEmpresas
+
     for (let i = 0; i < solicitudes.length; i++) {
         let Solicitud = solicitudes[i];
 
@@ -378,7 +367,7 @@ function TablaRollover() {
     
     let idViaje = parseInt(document.querySelector("#slcVerViajes").value)
    
-    // let idEmp = listaEmpresas
+
     for (let i = 0; i < listaViajes.length; i++) {
         let Viajes = listaViajes[i];
         let indiceSoli;
@@ -453,7 +442,6 @@ function crearSolicitud() {
     if (contenedores < 0 || contenedores > 1000 && PuertoOrigen === "" && Descripcion === "") {
         alert("la cantidad de contenedores es invalida");
     } else {
-        //let importador = listaImportadores[numero]
         let empresa = listaEmpresas[idEmpresa]
         let Solicitudes = new Solicitud(
             TipodeCarga,
@@ -461,28 +449,30 @@ function crearSolicitud() {
             contenedores,
             Descripcion,
             this.Estado = "Pendiente",
-            this.idEmpresa = idEmpresa
+            this.idEmpresa = idEmpresa,
+            this.idImportador= usuarioLogueado.numero
 
         );
         empresa.agregarSolicitud(Solicitudes);
-        //importador.agregarSolicitudImp(Solicitudes);
+        usuarioLogueado.agregarSolicitudImp(Solicitudes);
         solicitudes.push(Solicitudes);
         alert("Solicitud creado");
-        mostrarTabla(solicitudes);
+        mostrarTabla();
+        deshabilitarImportador()
     }
 }
 //<<<<<<<<<<<<<<<<<<<<<<<Fin Crear Solicitud>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //<<<<<<<<<<<<<<<<<<<<<<<<<Mostrar tabla pendientes/Buscador Solicituds/Boton de eliminar>>>>>>>>>>>>>>>>>>>>>>>>>
 
-function mostrarTabla(listaSolicituds) {
+function mostrarTabla() {
     let tabla = document.querySelector("#tablaSolicitudes");
     tabla.innerHTML = "";
     
-    for (let i = 0; i < listaSolicituds.length; i++) {
-        let Solicitud = listaSolicituds[i];
+    for (let i = 0; i < solicitudes.length; i++) {
+        let Solicitud = solicitudes[i];
 
 
-        if (Solicitud.Estado === "Pendiente") {
+        if (Solicitud.Estado === "Pendiente" && Solicitud.idImportador === usuarioLogueado.numero) {
             let texto = `
          <tr>
             <td>${Solicitud.idEmpresa}</td>
@@ -491,16 +481,18 @@ function mostrarTabla(listaSolicituds) {
             <td>${Solicitud.PuertoOrigen}</td>
             <td>${Solicitud.CantCont}</td>
             <td>${Solicitud.Desc}</td>
-           <td><input type="button" value="X" class="btnEliminar" id="${Solicitud.id}-Eliminar" data-Eliminar="${Solicitud.id}"></td>
+           <td><input type="button" value="X" class="btnEliminar" id="${Solicitud.id}-Eliminar" data-Eliminar="${Solicitud.id}" ></td>
          </tr>`;
             tabla.innerHTML += texto;
         }
+
     }
     let botonesEliminar = document.querySelectorAll(".btnEliminar");
     for (let i = 0; i < botonesEliminar.length; i++) {
         let boton = botonesEliminar[i];
         boton.addEventListener("click", EliminarSolicitud);
     }
+    deshabilitarImportador()
 }
 
 function EliminarSolicitud() {
@@ -513,7 +505,9 @@ function EliminarSolicitud() {
             sigoBuscado = false;
         }
     }
+    if(usuarioLogueado)
     actualizarTabla();
+    deshabilitarImportador();
 }
 
 function actualizarTabla() {
@@ -521,7 +515,7 @@ function actualizarTabla() {
     tabla.innerHTML = ""
     for (let i = 0; i < solicitudes.length; i++) {
         let Solicitud = solicitudes[i];
-        if (Solicitud.Estado === "Pendiente") {
+        if (Solicitud.Estado === "Pendiente" && Solicitud.idImportador === usuarioLogueado.numero) {
             let texto = `
          <tr>
             <td>${Solicitud.empresa}</td>
@@ -564,3 +558,32 @@ function BuscarPendiente() {
     }
 }
 //<<<<<<<<<<<<<<<<<<<<<<<<<Fin Mostrar tabla pendientes/Buscador Solicituds/Boton de eliminar>>>>>>>>>>>>>>>>>>>>>>>>>
+function deshabilitarImportador(){
+    let Imp;
+    let importador;
+    
+    
+    for(let i = 0; i < listaImportadores.length; i++){
+        importador = listaImportadores[i]
+        Imp = listaImportadores[i].solicitudes;
+        let Soli;
+        let Canceladas = 0
+        for(let i = 0; i < Imp.length; i++){
+            Soli = Imp[i]
+           
+            if(Soli.Estado === "Cancelada"){
+                Canceladas++;
+                if(Canceladas>=3){
+                    importador.Estado = false
+                        document.getElementById("btnCrearSolicitud").disabled = true
+                        let botones = document.getElementsByClassName("btnEliminar")
+                        for(let i = 0; i<botones.length; i++)
+                        botones[i].disabled = true
+                }
+            }
+    }
+       
+    }
+        }
+        
+    
