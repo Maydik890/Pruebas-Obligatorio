@@ -317,7 +317,7 @@ function TablaAsignarSolicitud() {
         let Solicitud = solicitudes[i];
 
 
-        if (Solicitud.Estado === "Pendiente") {
+        if (Solicitud.Estado === "Pendiente" && Solicitud.idEmpresa === usuarioLogueado.numero) {
             let IDv="";
             for(let i = 0; i<listaViajes.length; i++){
              
