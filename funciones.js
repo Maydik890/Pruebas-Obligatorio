@@ -3,7 +3,7 @@ window.addEventListener("load", inicio);
 let usuarioLogueado;
 
 let listaEmpresas = [
-    new Empresa("GuilleSA", "gga", "123" ),
+    new Empresa("GuilleSA", "gga", "123"),
     new Empresa("ORT", "ort", "123"),
     
 ];
