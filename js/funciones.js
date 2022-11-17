@@ -3,28 +3,44 @@ window.addEventListener("load", inicio);
 let usuarioLogueado;
 
 let listaEmpresas = [
-    new Empresa("GuilleSA", "gga", "123"),
-    new Empresa("ORT", "ort", "123"),
+    new Empresa("Taven SA", "Taven-Sa", "Taven33"),
+    new Empresa("Maersk line", "Maersk", "MaLine54"),
+    new Empresa("Mediterranean Shipping Company", "MSC", "Medi902"),
+    new Empresa("COSCO Group", "Cosco", "Cosco19"),
     
 ];
-
+let img1 = "empresas/1.jpg"
+let img2 = "empresas/2.jpg"
+let img3 = "empresas/3.jpg"
+let img4 = "empresas/4.jpg"
+let img5 = "empresas/5.jpg"
+let img6 = "empresas/6.jpg"
+let img7 = "empresas/7.jpg"
+let img8 = "empresas/8.jpg"
 let listaImportadores = [
-    new Importador("imp1","nombre","img", "Hola123"),
-    new Importador("imp2", "nombre","img","Hola123"),
+    new Importador("Global_Trade","Global Trade",img1, "Global123"),
+    new Importador("DesLog", "Desarrollo logistico",img3,"Desarrollo1900"),
+    new Importador("ComGLob","Comercial Global",img6, "Comercial2000"),
+    new Importador("AeroOp", "Aero Operaciones",img8,"Aero134002"),
+    new Importador("ASPMOL","Aspel Molding",img7, "aSpel2806"),
 ];
 
 let solicitudes = [
-     new Solicitud("Carga Peligrosa", "Buceo", "200", "Bombas", "Confirmada", 0, 1),
-     new Solicitud ("Refrigerado", "Viña", "300", "Carne", "Confirmada", 0, 1),
-     new Solicitud("Carga Peligrosa", "Buceo", "200", "Bombas", "Confirmada", 0, 1),
-     new Solicitud ("Refrigerado", "Viña", "300", "Carne", "Pendiente", 0, 1)
+     new Solicitud("Carga Peligrosa", "Buceo", "50", "Bombas", "Pendiente", 0, 1),
+     new Solicitud ("Carga General", "Santa Marta", "1000", "Tela", "Confirmada", 1, 2),
+     new Solicitud("Carga Peligrosa", "Cartagena", "100", "Bombas", "Confirmada", 2, 4),
+     new Solicitud ("Refrigerado", "Arica", "250", "Carne", "Cancelada", 2, 2),
+     new Solicitud ("Carga General", "Valparaiso", "400", "Tornillos", "Ignorada", 3, 3)
 ];
 
 
 
 
 let listaViajes = [
-    new CrearViaje("HOla","1000","2022-10-14",1,1)
+    new CrearViaje("Calypso","1000","2022-12-14",0,1),
+    new CrearViaje("Zafiro","800","2022-11-28",1,0),
+    new CrearViaje("Argo","2000","2022-12-24",2,3),
+    new CrearViaje("Kempes","500","2023-1-16",3,4),
 ];
 
 function inicio() {
@@ -224,7 +240,7 @@ function login() {
 
                 usuarioLogueado = importador;
             }
-
+            
             mostrar("IMPORTADOR");
             mostrar("Secciones");
             Ocultar("navEmpresa")
@@ -233,6 +249,7 @@ function login() {
             Ocultar("divTablaPendiente");
             Ocultar("InformacionEstadistica")
             Ocultar("aux")
+            document.querySelector("#pImg").innerHTML= `<img src="${usuarioLogueado.imagen}">`
         }
     } else {
         alert("Datos incorrectos.");
