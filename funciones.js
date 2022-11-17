@@ -14,16 +14,18 @@ let listaImportadores = [
 ];
 
 let solicitudes = [
-     new Solicitud("Carga Peligrosa", "Buceo", "200", "Bombas", "Cancelada", 0, 1),
-     new Solicitud ("Refrigerado", "Viña", "300", "Carne", "Cancelada", 0, 1),
-     new Solicitud("Carga Peligrosa", "Buceo", "200", "Bombas", "Cancelada", 0, 1),
-     new Solicitud ("Refrigerado", "Viña", "300", "Carne", "Pendiente", 1, 1)
+     new Solicitud("Carga Peligrosa", "Buceo", "200", "Bombas", "Confirmada", 0, 1),
+     new Solicitud ("Refrigerado", "Viña", "300", "Carne", "Confirmada", 0, 1),
+     new Solicitud("Carga Peligrosa", "Buceo", "200", "Bombas", "Confirmada", 0, 1),
+     new Solicitud ("Refrigerado", "Viña", "300", "Carne", "Pendiente", 0, 1)
 ];
 
 
 
 
-let listaViajes = [];
+let listaViajes = [
+    new CrearViaje("HOla","1000","2022-10-14",1,1)
+];
 
 function inicio() {
     document.querySelector("#btnLogin").addEventListener("click", login);
@@ -56,7 +58,8 @@ function inicio() {
 function CargarPrecargas(){
     let idEmp;
     let idImp;
-    let idSol
+    let idSol;
+    let idViaj;
     for(let i = 0; i < solicitudes.length; i++){
         idSol = solicitudes[i]
         for (let i = 0; i < listaEmpresas.length; i++){
@@ -69,7 +72,23 @@ for (let i = 0; i < listaImportadores.length; i++){
 if(idImp.numero === idSol.idImportador){
 idImp.agregarSolicitudImp(idSol)
 }}}
+for( let i = 0; i < listaViajes.length;i++){
+  idViaj = listaViajes[i]
+  for( let i = 0; i < solicitudes.length;i++){
+    idSol = solicitudes[i]
+    if(idViaj.idSolicitud == idSol.id){
+        idViaj.agregarSolicitud(idSol);
+  }}
+
 }
+for( let i = 0; i < listaViajes.length;i++){
+    idViaj = listaViajes[i]
+    for( let i = 0; i < listaEmpresas.length;i++){
+      idEmp = listaEmpresas[i]
+      if(idViaj.idEmpresa === idEmp.numero){
+          idViaj.agregarViajeEmp(idEmp);
+    }
+}}}
 
 
 
@@ -739,24 +758,59 @@ function Estadisticas(){
      let Porcentaje = cuenta*100
      texto.innerHTML = Porcentaje + "%"
      tablaEstadistica()
+     tablaFecha()
     }
 }
+function compararFechaCreciente(Solicitud1, Solicitud2) {
+    return Solicitud1.fecha.localeCompare(Solicitud2.fecha);
+}
+function tablaFecha(){
+    let tabla = document.querySelector("#tablaFechas");
+    tabla.innerHTML = ""
+    for (let i = 0; i < listaViajes.length; i++) {
+        let viajes = listaViajes[i];
+        let Soli
+        for(let i = 0; i< viajes.solicitudes.length; i++){
+            Soli = viajes.solicitudes[i]
+            let solis
+        if (Soli.idImportador === usuarioLogueado.numero) {
+            for(let i = 0; i < solicitudes.length; i++){
+                solis = solicitudes[i]
+            if(solis.Estado === "Confirmada"){
+            let texto = `
+         <tr>
+            <td>${solis.id}</td>
+            <td>${viajes.fecha}</td>
+         </tr>`;
+            tabla.innerHTML += texto;
+        }}}
+     
+    }}
+}
+
 function tablaEstadistica(){
+    
     let tabla = document.querySelector("#tablaEstadistica");
     tabla.innerHTML = ""
     for (let i = 0; i < solicitudes.length; i++) {
         let Solicitud = solicitudes[i];
+        let Emp
         if (Solicitud.idImportador === usuarioLogueado.numero) {
+            for (let i = 0; i < listaEmpresas.length; i++){
+                Emp=listaEmpresas[i]
+                let Porcentaje=Number((Emp.solicitudes.length/Solicitud.length)*100)
+                
+
             let texto = `
          <tr>
-            <td>${}</td>
-            <td>${}</td>
+            <td>${Emp.id}</td>
+            <td>${Porcentaje}</td>
          </tr>`;
             tabla.innerHTML += texto;
         }
      
     }
-}
+}}
 //<<<<<<<<<<<<<<<<<<<<<<<<<Fin Info Estadistica>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //<<<<<<<<<<<<<<<<<<<<<<Deshabilita al importador>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function deshabilitarImportador(){

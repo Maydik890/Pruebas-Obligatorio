@@ -50,13 +50,15 @@ class Solicitud {
   
   class CrearViaje { 
 
-    constructor(NombreBuque, CantMaxContenedores, Fecha){
+    constructor(NombreBuque, CantMaxContenedores, Fecha, Empresa, Solicitud){
         this.NombreBuque = NombreBuque;
         this.MaxContenedores = CantMaxContenedores;
         this.Empresa = [];
         this.Automatico = idAutomatico++;
         this.fecha = Fecha;
         this.solicitudes = [];
+        this.idEmpresa = Empresa
+        this.idSolicitud= Solicitud
     }
     agregarViajeEmp(unViaje){
         this.Empresa.push(unViaje)
