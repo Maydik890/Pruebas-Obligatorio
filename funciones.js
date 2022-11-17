@@ -534,6 +534,7 @@ function actualizarTabla() {
             boton.addEventListener("click", EliminarSolicitud);
         }
     }
+
 }
 
 function BuscarPendiente() {
@@ -542,7 +543,7 @@ function BuscarPendiente() {
     tabla.innerHTML = " "
     for (let i = 0; i < solicitudes.length; i++) {
         let Solicitud = solicitudes[i];
-        if (Solicitud.Desc.includes(descripcion) && descripcion != "") {
+        if (Solicitud.Desc.includes(descripcion) && descripcion != "" && Solicitud.Estado === "Pendiente") {
             let texto = `
          <tr>
             <td>${Solicitud.idEmpresa}</td>
@@ -556,6 +557,7 @@ function BuscarPendiente() {
             tabla.innerHTML += texto;;
         }
     }
+    deshabilitarImportador()
 }
 //<<<<<<<<<<<<<<<<<<<<<<<<<Fin Mostrar tabla pendientes/Buscador Solicituds/Boton de eliminar>>>>>>>>>>>>>>>>>>>>>>>>>
 function deshabilitarImportador(){
