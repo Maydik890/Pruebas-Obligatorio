@@ -33,11 +33,17 @@
                   <a style="font-size: 10px;" id="btnPendienteaMtvdeo">Asignar solicitud</a>
                 </li>
                 <li>
-                    <a style="font-size: 10px;" id="btnRollover">Rollover</a>
+                    <a style="font-size: 10px;" id="btnMostRollover">Rollover</a>
                 </li>
                 <li>
                     <a style="font-size: 10px;" id="btnManifestoDeCarga">Manifesto de carga</a>
                 </li>
+                <li>
+                  <a style="font-size: 10px;" id="btnPeligrosa">Lista Cargas Peligrosa</a>
+              </li>
+              <li>
+                <a style="font-size: 10px;" id="btnHabilitarImp">Importadores Deshabilitados</a>
+            </li>
           
               </ul>
 
@@ -51,11 +57,9 @@
                   <a style="font-size: 10px;" id="btnPendientes">Solicitudes pendientes</a>
                 </li>
                 <li>
-                    <a style="font-size: 10px;">Información estadística</a>
+                    <a style="font-size: 10px;" id="btnInfoEstadistica">Información estadística</a>
                 </li>
-                <li>
-                    <a style="font-size: 10px;"></a>
-                </li>
+          
           
               </ul>
 
@@ -157,7 +161,69 @@
             </tbody>
         </table>
         </div>
-
+        <div id="ManifiestoDeCarga">
+          <table>
+            <thead>
+                <tr>
+                    
+                    <th>Origen</th>
+                    <th>Contenedor</th>
+                    <th>Importador</th>
+                    <th>Descripcion</th>
+                    <th>Tipo de Mercaderia</th>
+                    
+                    
+                </tr>
+            </thead>
+            <tbody id="tablaManifiesto">
+                <tr>
+                    <td colspan="5">Sin Datos</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <div id="CargaPeligrosa">
+          <table>
+            <thead>
+                <tr>
+                    
+                    <th>Origen</th>
+                    <th>Contenedor</th>
+                    <th>Importador</th>
+                    <th>Descripcion</th>
+                    <th>Tipo de Mercaderia</th>
+                    
+                    
+                </tr>
+            </thead>
+            <tbody id="tablaPeligrosa">
+                <tr>
+                    <td colspan="5">Sin Datos</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <div id="HabilitarImp">
+          <table>
+            <thead>
+                <tr>
+                    
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Imagen</th>
+                    <th>Habilitar</th>
+                    
+                    
+                    
+                </tr>
+            </thead>
+            <tbody id="tablaHabilitar">
+                <tr>
+                    <td colspan="4">Sin Datos</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
 
 
 
@@ -225,9 +291,36 @@
     
 
   </div>
+  <!-- <<<<<<<<<<<<<<<<<<<<<<<< FIN TABLA>>>>>>>>>>>>>>>>>>>>>>>>> -->
+  <div id="InformacionEstadistica">
+    <table>
+    
+          <tr>
+              <td>Porcentaje de Cancelaciones</td>
+              <td><p id="pCancelaciones"></p></td>
+          </tr>
+      
+  </table>
+    <br>
+
+    <table>
+      <thead>
+          <tr>
+              <th>ID Empresa</th>
+              <th>%de Participacion</th>
+              
+          </tr>
+      </thead>
+      <tbody id="tablaEstadistica">
+          <tr>
+              <td colspan="2">Sin Datos</td>
+          </tr>
+      </tbody>
+  </table>
+  </div>
 </div>
 
-  <!-- <<<<<<<<<<<<<<<<<<<<<<<< FIN TABLA>>>>>>>>>>>>>>>>>>>>>>>>> -->
+  
 
 
 

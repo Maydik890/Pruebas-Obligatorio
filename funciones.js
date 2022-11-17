@@ -16,7 +16,7 @@ let listaImportadores = [
 let solicitudes = [
      new Solicitud("Carga Peligrosa", "Buceo", "200", "Bombas", "Cancelada", 0, 1),
      new Solicitud ("Refrigerado", "Viña", "300", "Carne", "Cancelada", 0, 1),
-     new Solicitud("Carga Peligrosa", "Buceo", "200", "Bombas", "Pendiente", 0, 1),
+     new Solicitud("Carga Peligrosa", "Buceo", "200", "Bombas", "Cancelada", 0, 1),
      new Solicitud ("Refrigerado", "Viña", "300", "Carne", "Pendiente", 1, 1)
 ];
 
@@ -35,8 +35,14 @@ function inicio() {
     document.querySelector("#btnPendientes").addEventListener("click", MosTablaPendinte);
     document.querySelector("#btnBuscarPendiente").addEventListener("click", BuscarPendiente);
     document.querySelector("#txtViajeBuque").addEventListener("click", CrearViajeBuque);
-    document.querySelector("#btnPendienteaMtvdeo").addEventListener("click", TablaAsignarSolicitud);
+    document.querySelector("#btnPendienteaMtvdeo").addEventListener("click", MosTablaAsignarSolicitud);
     document.querySelector("#btnVerViajes").addEventListener("click", TablaRollover);
+    document.querySelector("#btnManifestoDeCarga").addEventListener("click", ManifiestoDeCarga);
+    document.querySelector("#btnSolicitudBuque").addEventListener("click", MostCrearBuqe)
+    document.querySelector("#btnMostRollover").addEventListener("click", MostRollover);
+    document.querySelector("#btnPeligrosa").addEventListener("click", MostPeligrosa);
+    document.querySelector("#btnHabilitarImp").addEventListener("click", MostHabilitarImp);
+    document.querySelector("#btnInfoEstadistica").addEventListener("click", MostInfoEstadistica)
     cargarPersonas();
     mostrar("INICIAL");
     Ocultar("Registro");
@@ -177,17 +183,21 @@ function login() {
             if (usuario === empresa.usuario && pass === empresa.pass) {
 
                 usuarioLogueado = empresa;
-            }
-
-
+            } 
         }
-       
+        mostrar("CrearSolicitudEmpresa")
+        Ocultar("ManifiestoDeCarga")
+        Ocultar("AsignarSolicitud")
+        Ocultar("Rollover")
         mostrar("Secciones")
         mostrar("EMPRESA");
         mostrar("navEmpresa")
         Ocultar("navImportador")
         Ocultar("INICIAL")
         Ocultar("AsignarSolicitud")
+        Ocultar("CargaPeligrosa")
+        Ocultar("HabilitarImp")
+        Ocultar("aux")
     } else if (loginImportadorValido(usuario, pass)) {
         for (let i = 0; i < listaImportadores.length; i++) {
             let importador = listaImportadores[i];
@@ -202,7 +212,7 @@ function login() {
             Ocultar("INICIAL");
             mostrar("crearSolicitud")
             Ocultar("divTablaPendiente");
-
+            Ocultar("InformacionEstadistica")
             Ocultar("aux")
         }
     } else {
@@ -210,12 +220,7 @@ function login() {
     }
 }
 
-function obtenerEmpresa(usuario) {
-    let respuesta = null;
-    for (let empresaActual of listaEmpresas) {
 
-    }
-}
 
 function loginEmpresaValido(usuario, password) {
     let loginCorrecto = false;
@@ -244,15 +249,11 @@ function loginImportadorValido(usuario, password) {
 }
 //<<<<<<<<<<<<<<<<<<<<Fin LOGIN IMPORTADOR/EMPRESA>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //<<<<<<<<<<<<<<<Mostrar/Ocultar Opciones del importador>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-function MostInicioImportador() {
-    Ocultar("crearSolicitud")
-    mostrar("InicioImportador")
-}
-
 function MostrarcrearSolicitud() {
-    mostrar("crearSolicitud")
-    Ocultar("divTablaPendiente")
+    mostrar("crearSolicitud");
+    Ocultar("divTablaPendiente");
     Ocultar("InicioImportador");
+    Ocultar("InformacionEstadistica");
     deshabilitarImportador()
    
 }
@@ -260,10 +261,19 @@ function MostrarcrearSolicitud() {
 function MosTablaPendinte() {
     mostrar("divTablaPendiente");
     Ocultar("crearSolicitud");
+    Ocultar("InformacionEstadistica")
     deshabilitarImportador();
     mostrarTabla();
 }
 //<<<<<<<<<<<<<<<Fin Mostrar/Ocultar Opciones del importador>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function MostCrearBuqe(){
+    mostrar("CrearSolicitudEmpresa")
+    Ocultar("ManifiestoDeCarga")
+    Ocultar("AsignarSolicitud")
+    Ocultar("Rollover")
+    Ocultar("CargaPeligrosa")
+    Ocultar("HabilitarImp")
+}
 function CrearViajeBuque() {
     let NombreBuque = document.querySelector("#txtNombreBuque").value;
     let CantidadMaxCont = parseInt(document.querySelector("#txtCantidadContenedores").value);
@@ -283,7 +293,7 @@ function CrearViajeBuque() {
         viaje.push(ViajeBuque);
         alert("Solicitud creado");
         mostrarTabla(solicitudes);
-        TablaAsignarSolicitud();
+        
         cargarViaje();
        
     
@@ -297,7 +307,15 @@ function cargarViajeAsignar(){
     }
     document.querySelector("#SelectAsignarViaje").innerHTML = texto;
 }
-
+function MosTablaAsignarSolicitud(){
+    TablaAsignarSolicitud();
+    mostrar("AsignarSolicitud")
+    Ocultar("ManifiestoDeCarga")
+    Ocultar("CrearSolicitudEmpresa")
+    Ocultar("Rollover")
+    Ocultar("CargaPeligrosa")
+    Ocultar("HabilitarImp")
+}
 function TablaAsignarSolicitud() {
     let tabla = document.querySelector("#tablaAsignarSolicitudes");
     tabla.innerHTML = "";
@@ -361,6 +379,16 @@ function cargarViaje() {
     }
     document.querySelector("#slcVerViajes").innerHTML = texto;
 }
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Rollover>>>>>>>>>>>>>>>>>>>>>>>
+function MostRollover(){
+    TablaRollover()
+    mostrar("Rollover")
+    Ocultar("ManifiestoDeCarga")
+    Ocultar("AsignarSolicitud")
+    Ocultar("CrearSolicitudEmpresa")
+    Ocultar("CargaPeligrosa")
+    Ocultar("HabilitarImp")
+}
 function TablaRollover() {
     let tabla = document.querySelector("#tablaRollover");
     tabla.innerHTML = "";
@@ -404,6 +432,7 @@ function TablaRollover() {
          let boton = botonesAsignar[i];
          boton.addEventListener("click", Rollover);
      }
+            
 }
  function Rollover() { 
      let IdViaje = parseInt(document.querySelector("#SelectRollearViaje").value)
@@ -423,14 +452,135 @@ function TablaRollover() {
     if (respuesta) {
         objviajes.solicitudes.splice(pos, ElementosAEliminar);
         TablaRollover()
+        for(let i = 0; i<listaViajes.length; i++){
+            let viaje = listaViajes[i];
+            if(viaje.Automatico === IdViaje){
+         viaje.agregarSolicitud(objsoli);
+     }}
     }
-             for(let i = 0; i<listaViajes.length; i++){
-                let viaje = listaViajes[i];
-                if(viaje.Automatico === IdViaje){
-             viaje.agregarSolicitud(objsoli);
-         }}
+             
      }}}}
-  
+     //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Fin Rollover>>>>>>>>>>>>>>>>>>>>>>>
+     function ManifiestoDeCarga() {
+        let tabla = document.querySelector("#tablaManifiesto");
+        tabla.innerHTML = "";
+    
+        for (let i = 0; i < solicitudes.length; i++) {
+            let Solicitud = solicitudes[i];
+    
+    
+            if (Solicitud.Estado === "Confirmada" && Solicitud.idEmpresa === usuarioLogueado.numero) {
+            
+                let texto = `
+             <tr>
+                <td>${Solicitud.PuertoOrigen}</td>
+                <td>${Solicitud.CantCont}</td>
+                <td>${Solicitud.idImportador}</td>
+                <td>${Solicitud.Desc}</td>
+                <td>${Solicitud.Carga}</td>
+             </tr>`;
+                tabla.innerHTML += texto;
+            
+            }
+            mostrar("ManifiestoDeCarga")
+            Ocultar("Rollover")
+            Ocultar("AsignarSolicitud")
+            Ocultar("CrearSolicitudEmpresa")
+            Ocultar("CargaPeligrosa")
+            Ocultar("HabilitarImp")
+        }}
+        function MostPeligrosa() {
+            let tabla = document.querySelector("#tablaPeligrosa");
+            tabla.innerHTML = "";
+        
+            for (let i = 0; i < solicitudes.length; i++) {
+                let Solicitud = solicitudes[i];
+        
+        
+                if (Solicitud.Estado === "Confirmada" && Solicitud.idEmpresa === usuarioLogueado.numero && Solicitud.Carga === "Carga Peligrosa") {
+                    for(let i = 0; i<listaViajes.length; i++){
+                     
+                    let texto = `
+                 <tr>
+                    <td>${Solicitud.PuertoOrigen}</td>
+                    <td>${Solicitud.CantCont}</td>
+                    <td>${Solicitud.idImportador}</td>
+                    <td>${Solicitud.Desc}</td>
+                    <td>${Solicitud.Carga}</td>
+                 </tr>`;
+                    tabla.innerHTML += texto;
+                
+                }
+                
+        }}  mostrar("CargaPeligrosa")
+            Ocultar("ManifiestoDeCarga")
+            Ocultar("Rollover")
+            Ocultar("AsignarSolicitud")
+            Ocultar("CrearSolicitudEmpresa")
+            Ocultar("HabilitarImp")
+        }
+        
+            function MostHabilitarImp(){
+                HabilitarImp()
+                mostrar("HabilitarImp")
+                Ocultar("CargaPeligrosa")
+                Ocultar("ManifiestoDeCarga")
+                Ocultar("Rollover")
+                Ocultar("AsignarSolicitud")
+                Ocultar("CrearSolicitudEmpresa")
+
+            }
+function HabilitarImp(){
+                let tabla = document.querySelector("#tablaHabilitar");
+                tabla.innerHTML = ""
+   
+
+    for (let i = 0; i < listaImportadores.length; i++) {
+        let Importador = listaImportadores[i];
+        if(Importador.Estado === false){
+            let texto = `
+         <tr>
+            <td>${Importador.numero}</td>
+            <td>${Importador.usuario}</td>
+            <td>${Importador.imagen}</td>
+            <td><input type="button" value="Habilitar" class="btnHabilitar" id="${Importador.numero}-Eliminar" data-Eliminar="${Importador.numero}"></td>
+         </tr>`;
+            tabla.innerHTML += texto;
+        
+        }}
+        
+    
+     let botonesAsignar = document.querySelectorAll(".btnHabilitar");
+     for (let i = 0; i < botonesAsignar.length; i++) {
+         let boton = botonesAsignar[i];
+         boton.addEventListener("click", Habilitar);
+     }}
+    
+     function Habilitar() { 
+        let numeroContenido = parseInt(this.id);
+        ;
+        for (let i = 0; i < listaImportadores.length; i++) {
+            let objImportador = listaImportadores[i];
+            let objsoli;
+   
+            for (let i = 0; i < objImportador.solicitudes.length ; i++){
+                objsoli = objImportador.solicitudes[i]
+               if( objsoli.Estado === "Cancelada" && objsoli.id === numeroContenido){
+                let respuesta = confirm("¿Está seguro de Habilitar?");
+       if (respuesta) {
+           objsoli.Estado = "Ignorada"
+           objImportador.Estado = true
+           HabilitarImp()
+
+               
+
+        }}
+       }
+                
+        }}
+
+
+
 //<<<<<<<<<<<<<<<<<<<<<<<Crear Solicitud>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 function crearSolicitud() {
@@ -560,6 +710,55 @@ function BuscarPendiente() {
     deshabilitarImportador()
 }
 //<<<<<<<<<<<<<<<<<<<<<<<<<Fin Mostrar tabla pendientes/Buscador Solicituds/Boton de eliminar>>>>>>>>>>>>>>>>>>>>>>>>>
+//<<<<<<<<<<<<<<<<<<<<<<<<<Info Estadistica>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function MostInfoEstadistica(){
+    mostrar("InformacionEstadistica")
+    Ocultar("crearSolicitud")
+    Ocultar("divTablaPendiente")
+    Ocultar("InicioImportador");
+    Estadisticas()
+}
+function Estadisticas(){
+    let texto=document.querySelector("#pCancelaciones")
+    let Imp;
+    let Soli;
+    for (let i = 0; i < listaImportadores.length; i++){
+     Imp = listaImportadores[i]
+     let Cancelada=0
+     let Resto=0
+     for(let i = 0; i < Imp.solicitudes.length; i++){
+        Soli=Imp.solicitudes[i]
+        if(Soli.Estado === "Cancelada"){
+            Cancelada++
+        }
+        else{
+            Resto++
+        }
+     }
+     let cuenta = Cancelada/(Resto+Cancelada)
+     let Porcentaje = cuenta*100
+     texto.innerHTML = Porcentaje + "%"
+     tablaEstadistica()
+    }
+}
+function tablaEstadistica(){
+    let tabla = document.querySelector("#tablaEstadistica");
+    tabla.innerHTML = ""
+    for (let i = 0; i < solicitudes.length; i++) {
+        let Solicitud = solicitudes[i];
+        if (Solicitud.idImportador === usuarioLogueado.numero) {
+            let texto = `
+         <tr>
+            <td>${}</td>
+            <td>${}</td>
+         </tr>`;
+            tabla.innerHTML += texto;
+        }
+     
+    }
+}
+//<<<<<<<<<<<<<<<<<<<<<<<<<Fin Info Estadistica>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//<<<<<<<<<<<<<<<<<<<<<<Deshabilita al importador>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function deshabilitarImportador(){
     let Imp;
     let importador;
@@ -587,5 +786,3 @@ function deshabilitarImportador(){
        
     }
         }
-        
-    
