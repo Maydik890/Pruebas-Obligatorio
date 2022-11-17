@@ -49,7 +49,20 @@ function inicio() {
     Ocultar("Secciones");
     Ocultar("EMPRESA");
     Ocultar("IMPORTADOR");
+    CargarPrecargas()
 }
+function CargarPrecargas(){
+    let idEmp;
+    let idSol
+    for(let i = 0; i < solicitudes.length; i++){
+        idSol = solicitudes[i]
+        for (let i = 0; i < listaEmpresas.length; i++){
+            idEmp = listaEmpresas[i]
+        if(idEmp.numero === idSol.idEmpresa){
+    idEmp.agregarSolicitud(idSol)
+}}}}
+
+
 
 function buscarobj() {
 
