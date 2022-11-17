@@ -364,14 +364,14 @@ function TablaRollover() {
     tabla.innerHTML = "";
     
     let idViaje = parseInt(document.querySelector("#slcVerViajes").value)
-    let slcViaje = document.querySelector("#slcVerViajes").selectedindex
+   
     // let idEmp = listaEmpresas
     for (let i = 0; i < listaViajes.length; i++) {
         let Viajes = listaViajes[i];
         let indiceSoli;
         for(let i = 0; i<Viajes.solicitudes.length; i++){
             indiceSoli = Viajes.solicitudes[i]
-        }
+        
             
     
         if (Viajes.Automatico === idViaje) {
@@ -394,7 +394,7 @@ function TablaRollover() {
          </tr>`;
             tabla.innerHTML += texto;
         
-        }
+        }}
         
     }
      let botonesAsignar = document.querySelectorAll(".btnRollover");
@@ -407,24 +407,28 @@ function TablaRollover() {
      let IdViaje = parseInt(document.querySelector("#SelectRollearViaje").value)
      let numeroContenido = parseInt(this.id);
      let pos = -1;
+     let ElementosAEliminar=1
      ;
-     for (let i = 0; i < listaViajes.length && pos-1; i++) {
+     for (let i = 0; i < listaViajes.length && pos === -1; i++) {
          let objviajes = listaViajes[i];
          let objsoli;
 
-         for (let i = 0; i < objviajes.solicitudes.length; i++){
+         for (let i = 0; i < objviajes.solicitudes.length ; i++){
              objsoli = objviajes.solicitudes[i]
-         }
-         if (objsoli.id === numeroContenido) {
-             pos = [i]
-             objsoli.splice(pos,1);
+            if( objsoli.id === numeroContenido){
+                pos = [i]  
+             let respuesta = confirm("¿Está seguro de Rollear la solicitud?");
+    if (respuesta) {
+        objviajes.solicitudes.splice(pos, ElementosAEliminar);
+        TablaRollover()
+    }
              for(let i = 0; i<listaViajes.length; i++){
                 let viaje = listaViajes[i];
                 if(viaje.Automatico === IdViaje){
-             viaje.agregarSolicitud(objsolicitudes);
-         }}}
-     }
-  }
+             viaje.agregarSolicitud(objsoli);
+         }}
+     }}}}
+  
 //<<<<<<<<<<<<<<<<<<<<<<<Crear Solicitud>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 function crearSolicitud() {
