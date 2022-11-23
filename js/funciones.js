@@ -802,9 +802,10 @@ function tablaFecha(){
             <td>${viajes.fecha}</td>
          </tr>`;
             tabla.innerHTML += texto;
-        }}
+        }
+            }}
      
-    }}
+    }
 }}
 
 function tablaEstadistica(){
@@ -831,7 +832,9 @@ function tablaEstadistica(){
                     id++
                 }}}
                 Porcentaje=Number((id/usuarioLogueado.solicitudes.length)*100)
-
+                for(let i = 0; i < usuarioLogueado.solicitudes.length; i++){
+                    let solilog = usuarioLogueado.solicitudes[i]
+                if (solilog.Estado === "Confirmada" && Porcentaje != 0){
             let texto = `
          <tr>
             <td>${Emp.numero}</td>
@@ -841,7 +844,7 @@ function tablaEstadistica(){
             
         }
         tablahecha = true
-    }
+    }}}
 }}
 //<<<<<<<<<<<<<<<<<<<<<<<<<Fin Info Estadistica>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //<<<<<<<<<<<<<<<<<<<<<<Deshabilita al importador>>>>>>>>>>>>>>>>>>>>>>>>>>>>
