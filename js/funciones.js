@@ -762,6 +762,7 @@ function Estadisticas(){
      Imp = listaImportadores[i]
      let Cancelada=0
      let Resto=0
+     if(Imp === usuarioLogueado){
      for(let i = 0; i < Imp.solicitudes.length; i++){
         Soli=Imp.solicitudes[i]
         if(Soli.Estado === "Cancelada"){
@@ -777,6 +778,7 @@ function Estadisticas(){
      tablaEstadistica()
      tablaFecha()
     }
+    }
 }
 function compararFechaCreciente(Solicitud1, Solicitud2) {
     return Solicitud1.fecha.localeCompare(Solicitud2.fecha);
@@ -791,8 +793,8 @@ function tablaFecha(){
             Soli = viajes.solicitudes[i]
             let solis
         if (Soli.idImportador === usuarioLogueado.numero) {
-            for(let i = 0; i < solicitudes.length; i++){
-                solis = solicitudes[i]
+            for(let i = 0; i < usuarioLogueado.solicitudes.length; i++){
+                solis = usuarioLogueado.solicitudes[i]
             if(solis.Estado === "Confirmada"){
             let texto = `
          <tr>
@@ -800,32 +802,45 @@ function tablaFecha(){
             <td>${viajes.fecha}</td>
          </tr>`;
             tabla.innerHTML += texto;
-        }}}
+        }}
      
     }}
-}
+}}
 
 function tablaEstadistica(){
     
     let tabla = document.querySelector("#tablaEstadistica");
     tabla.innerHTML = ""
+    let tablahecha = false
     for (let i = 0; i < solicitudes.length; i++) {
         let Solicitud = solicitudes[i];
-        let Emp
-        if (Solicitud.idImportador === usuarioLogueado.numero) {
+        if (Solicitud.idImportador === usuarioLogueado.numero && !tablahecha) {
             for (let i = 0; i < listaEmpresas.length; i++){
                 Emp=listaEmpresas[i]
-                let Porcentaje=Number((Emp.solicitudes.length/Solicitud.length)*100)
+                let Porcentaje
+                let id=0
+                let idSoli
+                let idusulog
+                for(let i = 0; i < usuarioLogueado.solicitudes.length; i++){
+                    idusulog = usuarioLogueado.solicitudes[i]
                 
+                for(let i = 0; i < Emp.solicitudes.length; i++){
+                    idSoli = Emp.solicitudes[i]
+                
+                if (idSoli.id === idusulog.id){
+                    id++
+                }}}
+                Porcentaje=Number((id/usuarioLogueado.solicitudes.length)*100)
 
             let texto = `
          <tr>
-            <td>${Emp.id}</td>
+            <td>${Emp.numero}</td>
             <td>${Porcentaje}</td>
          </tr>`;
             tabla.innerHTML += texto;
+            
         }
-     
+        tablahecha = true
     }
 }}
 //<<<<<<<<<<<<<<<<<<<<<<<<<Fin Info Estadistica>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -856,4 +871,4 @@ function deshabilitarImportador(){
     }
        
     }
-        }
+}
