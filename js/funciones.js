@@ -240,7 +240,7 @@ function login() {
 
                 usuarioLogueado = importador;
             }
-            
+        }
             mostrar("IMPORTADOR");
             mostrar("Secciones");
             Ocultar("navEmpresa")
@@ -250,7 +250,7 @@ function login() {
             Ocultar("InformacionEstadistica")
             Ocultar("aux")
             document.querySelector("#pImg").innerHTML= `<img src="${usuarioLogueado.imagen}">`
-        }
+        
     } else {
         alert("Datos incorrectos.");
     }
